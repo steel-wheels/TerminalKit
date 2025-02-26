@@ -6,9 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		05DF74712D6F5882000EB93D /* TMEscapeCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DF74702D6F5882000EB93D /* TMEscapeCode.swift */; };
+		05DF74722D6F5882000EB93D /* TMEscapeCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DF74702D6F5882000EB93D /* TMEscapeCode.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		05D242532D6F576000E1D5FC /* TerminalKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TerminalKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05D242652D6F57D600E1D5FC /* TerminalKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TerminalKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		05DF74702D6F5882000EB93D /* TMEscapeCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMEscapeCode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -70,6 +76,7 @@
 			children = (
 				05D242552D6F576000E1D5FC /* TerminalKit_macOS */,
 				05D242662D6F57D600E1D5FC /* TerminalKit_iOS */,
+				05DF746F2D6F5846000EB93D /* Source */,
 				05D242542D6F576000E1D5FC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -81,6 +88,15 @@
 				05D242652D6F57D600E1D5FC /* TerminalKit.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		05DF746F2D6F5846000EB93D /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				05DF74702D6F5882000EB93D /* TMEscapeCode.swift */,
+			);
+			name = Source;
+			path = ../Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,6 +224,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05DF74712D6F5882000EB93D /* TMEscapeCode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +232,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05DF74722D6F5882000EB93D /* TMEscapeCode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,7 +254,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				INSTALL_PATH = "$(HOME)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -269,7 +287,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				INSTALL_PATH = "$(HOME)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -425,7 +443,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				INSTALL_PATH = "$(HOME)//Library/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -460,7 +478,7 @@
 				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				INSTALL_PATH = "$(HOME)//Library/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
