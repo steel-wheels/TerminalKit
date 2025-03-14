@@ -10,8 +10,16 @@ import  AppKit
 #else   // os(OSX)
 import  UIKit
 #endif  // os(OSX)
+import MultiUIKit
+import MultiDataKit
 
-public enum TMEscapeCode {
-        case text(String)
+/* Reference:
+ *  - https://en.wikipedia.org/wiki/ANSI_escape_code
+ *  - https://qiita.com/PruneMazui/items/8a023347772620025ad6
+ *  - http://www.termsys.demon.co.uk/vtansi.htm
+ */
+public enum TMEscapeCode
+{
+        case        string(String)
 }
 
