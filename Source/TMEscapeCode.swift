@@ -20,6 +20,9 @@ import MultiDataKit
  */
 public enum TMEscapeCode
 {
-        case        string(String)
+        //case    cursorUp(Int)
+        //case    cursorDown(Int)
+        //case    cursorForward(Int)
+        //case    cursorBackword(Int)
+        case    string(String)
 }
-

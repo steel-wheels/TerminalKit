@@ -17,6 +17,7 @@ class ViewController: NSViewController
 
                 // Do any additional setup after loading the view.
                 let storage = mTerminalView.terminalStorage
+                storage.setContentsSize(width: 40, height: 20)
                 let codes: Array<TMEscapeCode> = [
                         .string("HELLO, WORLD")
                 ]
