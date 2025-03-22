@@ -15,16 +15,17 @@ import MultiDataKit
 
 public class TMTerminalView: MITextView
 {
-        private var mStorage: TMTerminalStorage? = nil
-
         open override func setup(frame frm: CGRect) {
                 NSLog("TMTerminalView: setup")
                 super.setup(frame: frm)
-                mStorage = TMTerminalStorage(storage: super.textStorage)
+        }
+
+        open override func allocateStorage() -> MITextStorage {
+                return TMTerminalStorage()
         }
 
         public var terminalStorage: TMTerminalStorage { get {
-                if let storage = mStorage {
+                if let storage = super.textStorage as? TMTerminalStorage {
                         return storage
                 } else {
                         fatalError("can not happen")

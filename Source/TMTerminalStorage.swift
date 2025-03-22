@@ -9,7 +9,7 @@ import MultiUIKit
 import MultiDataKit
 import Foundation
 
-public class TMTerminalStorage
+public class TMTerminalStorage: MITextStorage
 {
         public struct Size {
                 public var width:  Int
@@ -19,34 +19,71 @@ public class TMTerminalStorage
                 }
         }
 
-        private var mTextStorage:       MITextStorage
         private var mTerminalSize:      Size
         private var mFont:              MIFont
 
-        public init(storage strg: MITextStorage){
-                mTextStorage    = strg
+        public var terminalSize: Size   { get { return mTerminalSize }}
+
+        public override init(){
                 mTerminalSize   = Size()
+                mFont           = TMTerminalStorage.terminalFont(size: 20.0)
+                super.init()
+
                 /* setup font */
-                mFont     = TMTerminalStorage.terminalFont(size: 20.0)
                 let commands: Array<MITextStorage.Command> = [
                         .font(mFont)
                 ]
-                strg.execute(commands: commands)
+                super.execute(commands: commands)
                 /* update */
                 updateTerminalSize()
                 /* initialize context */
                 initContext()
         }
 
-        public var terminalSize: Size   { get { return mTerminalSize }}
-        public var fontSize:     CGSize { get { return mTextStorage.fontSize }}
+        private func updateTerminalSize() {
+                let framesz = super.frameSize
+                let fontsz  = super.fontSize
+
+                mTerminalSize.width  = Int(framesz.width  / fontsz.width)
+                mTerminalSize.height = Int(framesz.height / fontsz.height)
+                NSLog("TerminalSize: \(mTerminalSize.width) x \(mTerminalSize.height)")
+        }
+
+        private func initContext() {
+                /* fill by spaces */
+                var str: String = ""
+                for i in 0..<mTerminalSize.height {
+                        let line = String(repeating: " ", count: mTerminalSize.width)
+                        if i > 0 { str += "\n" }
+                        str += line
+                }
+                let commands0: Array<MITextStorage.Command> = [
+                        .insert(str)
+                ]
+                super.execute(commands: commands0)
+
+                /* rewind the cursor */
+                let idx = super.currentIndex
+                let commands1: Array<MITextStorage.Command> = [
+                        .moveBackward(idx)
+                ]
+                super.execute(commands: commands1)
+        }
 
         public func setContentsSize(width w: Int, height h: Int) {
-                let lspace  = mTextStorage.lineSpacing
-                let fontsz  = mTextStorage.fontSize
+                let lspace  = super.lineSpacing
+                let fontsz  = super.fontSize
                 let width   = CGFloat(w) * fontsz.width
                 let height  = CGFloat(h) * (fontsz.height + lspace)
-                mTextStorage.contentsSize = CGSize(width: width, height: height)
+                self.contentsSize = CGSize(width: width, height: height)
+        }
+
+        open override var frameSize: CGSize {
+                get { return super.frameSize }
+                set(newval){
+                        super.frameSize = newval
+                        updateTerminalSize()
+                }
         }
 
         public func execute(codes: Array<TMEscapeCode>) {
@@ -64,11 +101,11 @@ public class TMTerminalStorage
                                 }
                         }
                 }
-                mTextStorage.execute(commands: cmds)
+                super.execute(commands: cmds)
         }
 
         private var cursorPosition: (Int, Int) {
-                let index = mTextStorage.currentIndex
+                let index = super.currentIndex
                 let width = mTerminalSize.width
                 if width > 0 {
                         let x     = index % width
@@ -96,35 +133,4 @@ public class TMTerminalStorage
                 }
                 return font
         }
-
-        private func updateTerminalSize() {
-                let framesz = mTextStorage.frameSize
-                let fontsz  = mTextStorage.fontSize
-
-                mTerminalSize.width  = Int(framesz.width  / fontsz.width)
-                mTerminalSize.height = Int(framesz.height / fontsz.height)
-                NSLog("TerminalSize: \(mTerminalSize.width) x \(mTerminalSize.height)")
-        }
-
-        private func initContext() {
-                /* fill by spaces */
-                var str: String = ""
-                for i in 0..<mTerminalSize.height {
-                        let line = String(repeating: " ", count: mTerminalSize.width)
-                        if i > 0 { str += "\n" }
-                        str += line
-                }
-                let commands0: Array<MITextStorage.Command> = [
-                        .insert(str)
-                ]
-                mTextStorage.execute(commands: commands0)
-
-                /* rewind the cursor */
-                let idx = mTextStorage.currentIndex
-                let commands1: Array<MITextStorage.Command> = [
-                        .moveBackward(idx)
-                ]
-                mTextStorage.execute(commands: commands1)
-        }
 }
-
