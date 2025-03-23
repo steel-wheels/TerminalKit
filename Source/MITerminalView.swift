@@ -1,6 +1,6 @@
 /*
- * @file TMTerminalView.swift
- * @description Define TMTerminalView class
+ * @file MITerminalView.swift
+ * @description Define MITerminalView class
  * @par Copyright
  *   Copyright (C) 2025 Steel Wheels Project
  */
@@ -13,19 +13,19 @@ import  UIKit
 import MultiUIKit
 import MultiDataKit
 
-public class TMTerminalView: MITextView
+public class MITerminalView: MITextView
 {
         open override func setup(frame frm: CGRect) {
-                NSLog("TMTerminalView: setup")
+                NSLog("MITerminalView: setup")
                 super.setup(frame: frm)
         }
 
         open override func allocateStorage() -> MITextStorage {
-                return TMTerminalStorage()
+                return MITerminalStorage()
         }
 
-        public var terminalStorage: TMTerminalStorage { get {
-                if let storage = super.textStorage as? TMTerminalStorage {
+        public var terminalStorage: MITerminalStorage { get {
+                if let storage = super.textStorage as? MITerminalStorage {
                         return storage
                 } else {
                         fatalError("can not happen")

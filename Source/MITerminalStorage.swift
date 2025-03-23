@@ -1,6 +1,6 @@
 /*
- * @file TMTerminalStorage.swift
- * @description Define TMTerminalStorage class
+ * @file MITerminalStorage.swift
+ * @description Define MITerminalStorage class
  * @par Copyright
  *   Copyright (C) 2025 Steel Wheels Project
  */
@@ -9,7 +9,7 @@ import MultiUIKit
 import MultiDataKit
 import Foundation
 
-public class TMTerminalStorage: MITextStorage
+public class MITerminalStorage: MITextStorage
 {
         public struct Size {
                 public var width:  Int
@@ -26,7 +26,7 @@ public class TMTerminalStorage: MITextStorage
 
         public override init(){
                 mTerminalSize   = Size()
-                mFont           = TMTerminalStorage.terminalFont(size: 20.0)
+                mFont           = MITerminalStorage.terminalFont(size: 20.0)
         }
 
         private func updateTerminalSize() {
@@ -95,7 +95,7 @@ public class TMTerminalStorage: MITextStorage
                 }
         }
 
-        public func execute(codes: Array<TMEscapeCode>) {
+        public func execute(codes: Array<MIEscapeCode>) {
                 var cmds: Array<MITextStorage.Command> = []
                 let (curx, _) = self.cursorPosition
                 for code in codes {

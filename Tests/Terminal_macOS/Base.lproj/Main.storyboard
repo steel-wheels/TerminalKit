@@ -709,7 +709,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="cOq-zz-EUW" customClass="TMTerminalView" customModule="TerminalKit">
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="cOq-zz-EUW" customClass="MITerminalView" customModule="TerminalKit">
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                             </customView>
                         </subviews>

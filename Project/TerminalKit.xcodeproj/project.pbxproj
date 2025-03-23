@@ -7,15 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		051180142D76A971005B867B /* TMTerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051180132D76A971005B867B /* TMTerminalView.swift */; };
-		051180152D76A971005B867B /* TMTerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051180132D76A971005B867B /* TMTerminalView.swift */; };
-		051180172D76AA88005B867B /* TMTerminalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051180162D76AA88005B867B /* TMTerminalStorage.swift */; };
-		051180182D76AA88005B867B /* TMTerminalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051180162D76AA88005B867B /* TMTerminalStorage.swift */; };
+		051180142D76A971005B867B /* MITerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051180132D76A971005B867B /* MITerminalView.swift */; };
+		051180152D76A971005B867B /* MITerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051180132D76A971005B867B /* MITerminalView.swift */; };
+		051180172D76AA88005B867B /* MITerminalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051180162D76AA88005B867B /* MITerminalStorage.swift */; };
+		051180182D76AA88005B867B /* MITerminalStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051180162D76AA88005B867B /* MITerminalStorage.swift */; };
 		0511802F2D79F082005B867B /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05DF74A42D6F5CC3000EB93D /* MultiDataKit.xcframework */; };
 		051180312D79F082005B867B /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05DF74A32D6F5CC3000EB93D /* MultiUIKit.xcframework */; };
 		051180352D79F083005B867B /* TerminalKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 051180342D79F083005B867B /* TerminalKit.xcframework */; };
-		05DF74712D6F5882000EB93D /* TMEscapeCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DF74702D6F5882000EB93D /* TMEscapeCode.swift */; };
-		05DF74722D6F5882000EB93D /* TMEscapeCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DF74702D6F5882000EB93D /* TMEscapeCode.swift */; };
+		05CCBC292D8FE6B000F096F5 /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05DF74A42D6F5CC3000EB93D /* MultiDataKit.xcframework */; };
+		05CCBC2A2D8FE6B000F096F5 /* MultiDataKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05DF74A42D6F5CC3000EB93D /* MultiDataKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		05CCBC2B2D8FE6B000F096F5 /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05DF74A32D6F5CC3000EB93D /* MultiUIKit.xcframework */; };
+		05CCBC2C2D8FE6B000F096F5 /* MultiUIKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05DF74A32D6F5CC3000EB93D /* MultiUIKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		05CCBC2D2D8FE6B000F096F5 /* TerminalKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 051180342D79F083005B867B /* TerminalKit.xcframework */; };
+		05CCBC2E2D8FE6B000F096F5 /* TerminalKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 051180342D79F083005B867B /* TerminalKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		05DF74712D6F5882000EB93D /* MIEscapeCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DF74702D6F5882000EB93D /* MIEscapeCode.swift */; };
+		05DF74722D6F5882000EB93D /* MIEscapeCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DF74702D6F5882000EB93D /* MIEscapeCode.swift */; };
 		05DF74A52D6F5CC3000EB93D /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05DF74A32D6F5CC3000EB93D /* MultiUIKit.xcframework */; };
 		05DF74A72D6F5CC3000EB93D /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05DF74A42D6F5CC3000EB93D /* MultiDataKit.xcframework */; };
 		05DF74AA2D6F5CE5000EB93D /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05DF74A42D6F5CC3000EB93D /* MultiDataKit.xcframework */; };
@@ -35,6 +41,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		05CCBC2F2D8FE6B000F096F5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				05CCBC2E2D8FE6B000F096F5 /* TerminalKit.xcframework in Embed Frameworks */,
+				05CCBC2C2D8FE6B000F096F5 /* MultiUIKit.xcframework in Embed Frameworks */,
+				05CCBC2A2D8FE6B000F096F5 /* MultiDataKit.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		05DF74AE2D6F5CE5000EB93D /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -50,14 +69,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		051180132D76A971005B867B /* TMTerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTerminalView.swift; sourceTree = "<group>"; };
-		051180162D76AA88005B867B /* TMTerminalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTerminalStorage.swift; sourceTree = "<group>"; };
+		051180132D76A971005B867B /* MITerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MITerminalView.swift; sourceTree = "<group>"; };
+		051180162D76AA88005B867B /* MITerminalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MITerminalStorage.swift; sourceTree = "<group>"; };
 		0511801D2D79EE90005B867B /* Terminal_macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Terminal_macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		051180342D79F083005B867B /* TerminalKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = TerminalKit.xcframework; path = ../../../Library/Frameworks/TerminalKit.xcframework; sourceTree = "<group>"; };
 		057318412D8FC41700E4D570 /* Terminal_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Terminal_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05D242532D6F576000E1D5FC /* TerminalKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TerminalKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05D242652D6F57D600E1D5FC /* TerminalKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TerminalKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		05DF74702D6F5882000EB93D /* TMEscapeCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMEscapeCode.swift; sourceTree = "<group>"; };
+		05DF74702D6F5882000EB93D /* MIEscapeCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIEscapeCode.swift; sourceTree = "<group>"; };
 		05DF74A32D6F5CC3000EB93D /* MultiUIKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiUIKit.xcframework; path = ../../../Library/Frameworks/MultiUIKit.xcframework; sourceTree = "<group>"; };
 		05DF74A42D6F5CC3000EB93D /* MultiDataKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiDataKit.xcframework; path = ../../../Library/Frameworks/MultiDataKit.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -152,6 +171,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05CCBC2D2D8FE6B000F096F5 /* TerminalKit.xcframework in Frameworks */,
+				05CCBC2B2D8FE6B000F096F5 /* MultiUIKit.xcframework in Frameworks */,
+				05CCBC292D8FE6B000F096F5 /* MultiDataKit.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,9 +234,9 @@
 		05DF746F2D6F5846000EB93D /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				05DF74702D6F5882000EB93D /* TMEscapeCode.swift */,
-				051180132D76A971005B867B /* TMTerminalView.swift */,
-				051180162D76AA88005B867B /* TMTerminalStorage.swift */,
+				05DF74702D6F5882000EB93D /* MIEscapeCode.swift */,
+				051180132D76A971005B867B /* MITerminalView.swift */,
+				051180162D76AA88005B867B /* MITerminalStorage.swift */,
 			);
 			name = Source;
 			path = ../Source;
@@ -300,6 +322,7 @@
 				0573183D2D8FC41700E4D570 /* Sources */,
 				0573183E2D8FC41700E4D570 /* Frameworks */,
 				0573183F2D8FC41700E4D570 /* Resources */,
+				05CCBC2F2D8FE6B000F096F5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -462,9 +485,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				051180172D76AA88005B867B /* TMTerminalStorage.swift in Sources */,
-				05DF74712D6F5882000EB93D /* TMEscapeCode.swift in Sources */,
-				051180152D76A971005B867B /* TMTerminalView.swift in Sources */,
+				051180172D76AA88005B867B /* MITerminalStorage.swift in Sources */,
+				05DF74712D6F5882000EB93D /* MIEscapeCode.swift in Sources */,
+				051180152D76A971005B867B /* MITerminalView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,9 +495,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				051180182D76AA88005B867B /* TMTerminalStorage.swift in Sources */,
-				05DF74722D6F5882000EB93D /* TMEscapeCode.swift in Sources */,
-				051180142D76A971005B867B /* TMTerminalView.swift in Sources */,
+				051180182D76AA88005B867B /* MITerminalStorage.swift in Sources */,
+				05DF74722D6F5882000EB93D /* MIEscapeCode.swift in Sources */,
+				051180142D76A971005B867B /* MITerminalView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

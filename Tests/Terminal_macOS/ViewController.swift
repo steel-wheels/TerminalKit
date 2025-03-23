@@ -10,7 +10,7 @@ import Cocoa
 
 class ViewController: NSViewController
 {
-        @IBOutlet weak var mTerminalView: TMTerminalView!
+        @IBOutlet weak var mTerminalView: MITerminalView!
 
         override func viewDidLoad() {
                 super.viewDidLoad()
@@ -18,7 +18,7 @@ class ViewController: NSViewController
                 // Do any additional setup after loading the view.
                 let storage = mTerminalView.terminalStorage
                 storage.setContentsSize(width: 40, height: 20)
-                let codes: Array<TMEscapeCode> = [
+                let codes: Array<MIEscapeCode> = [
                         .string("HELLO, WORLD")
                 ]
                 storage.execute(codes: codes)

@@ -1,6 +1,6 @@
 /*
- * @file TMEscapeCode.swift
- * @description Define TMEscapeCode class
+ * @file MIEscapeCode.swift
+ * @description Define MIEscapeCode class
  * @par Copyright
  *   Copyright (C) 2025 Steel Wheels Project
  */
@@ -18,7 +18,7 @@ import MultiDataKit
  *  - https://qiita.com/PruneMazui/items/8a023347772620025ad6
  *  - http://www.termsys.demon.co.uk/vtansi.htm
  */
-public enum TMEscapeCode
+public enum MIEscapeCode
 {
         //case    cursorUp(Int)
         //case    cursorDown(Int)
