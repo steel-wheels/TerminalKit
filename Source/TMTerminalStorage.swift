@@ -27,38 +27,43 @@ public class TMTerminalStorage: MITextStorage
         public override init(){
                 mTerminalSize   = Size()
                 mFont           = TMTerminalStorage.terminalFont(size: 20.0)
-                super.init()
-
-                /* setup font */
-                let commands: Array<MITextStorage.Command> = [
-                        .font(mFont)
-                ]
-                super.execute(commands: commands)
-                /* update */
-                updateTerminalSize()
-                /* initialize context */
-                initContext()
         }
 
         private func updateTerminalSize() {
                 let framesz = super.frameSize
                 let fontsz  = super.fontSize
+                let vspace  = super.lineSpacing
 
                 mTerminalSize.width  = Int(framesz.width  / fontsz.width)
-                mTerminalSize.height = Int(framesz.height / fontsz.height)
+                mTerminalSize.height = Int(framesz.height / (fontsz.height + vspace))
                 NSLog("TerminalSize: \(mTerminalSize.width) x \(mTerminalSize.height)")
         }
 
-        private func initContext() {
-                /* fill by spaces */
-                var str: String = ""
-                for i in 0..<mTerminalSize.height {
-                        let line = String(repeating: " ", count: mTerminalSize.width)
-                        if i > 0 { str += "\n" }
-                        str += line
+        private func updateContext() {
+                /* rebuild context */
+                var newlines: Array<NSAttributedString> = []
+                let attrs    = self.currentAttributes
+                let orglines = super.context.divideByNewline()
+                for line in orglines {
+                        let newline = line.adjustLength(width: mTerminalSize.width, attribute: attrs)
+                        newlines.append(newline)
                 }
+                let restnum = mTerminalSize.height - orglines.count
+                for _ in 0..<restnum {
+                        let spaces  = String(repeating: " ", count: mTerminalSize.width)
+                        let aspaces = NSAttributedString(string: spaces, attributes: attrs)
+                        newlines.append(aspaces)
+                }
+                let newcontext = NSMutableAttributedString(string: "")
+                for line in newlines {
+                        newcontext.append(line)
+                        newcontext.append(NSAttributedString(string: "\n"))
+                }
+
+                /* replace context */
                 let commands0: Array<MITextStorage.Command> = [
-                        .insert(str)
+                        .font(mFont),                   // required for initialize
+                        .fullReplace(newcontext)
                 ]
                 super.execute(commands: commands0)
 
@@ -81,8 +86,12 @@ public class TMTerminalStorage: MITextStorage
         open override var frameSize: CGSize {
                 get { return super.frameSize }
                 set(newval){
-                        super.frameSize = newval
-                        updateTerminalSize()
+                        let cursize = super.frameSize
+                        if cursize.width != newval.width || cursize.height != newval.height {
+                                super.frameSize = newval
+                                updateTerminalSize()
+                                updateContext()
+                        }
                 }
         }
 
