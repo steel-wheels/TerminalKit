@@ -54,6 +54,7 @@
 		051180162D76AA88005B867B /* TMTerminalStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMTerminalStorage.swift; sourceTree = "<group>"; };
 		0511801D2D79EE90005B867B /* Terminal_macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Terminal_macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		051180342D79F083005B867B /* TerminalKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = TerminalKit.xcframework; path = ../../../Library/Frameworks/TerminalKit.xcframework; sourceTree = "<group>"; };
+		057318412D8FC41700E4D570 /* Terminal_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Terminal_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05D242532D6F576000E1D5FC /* TerminalKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TerminalKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05D242652D6F57D600E1D5FC /* TerminalKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TerminalKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05DF74702D6F5882000EB93D /* TMEscapeCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMEscapeCode.swift; sourceTree = "<group>"; };
@@ -62,6 +63,31 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		057318782D8FC42300E4D570 /* Exceptions for "Terminal_iOS" folder in "Terminal_macOS" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"/Localized: LaunchScreen.storyboard",
+				"/Localized: Main.storyboard",
+				AppDelegate.swift,
+				Assets.xcassets,
+				Info.plist,
+				SceneDelegate.swift,
+				ViewController.swift,
+			);
+			target = 0511801C2D79EE90005B867B /* Terminal_macOS */;
+		};
+		057318792D8FC42300E4D570 /* Exceptions for "Terminal_iOS" folder in "Terminal_iOS" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"/Localized: LaunchScreen.storyboard",
+				"/Localized: Main.storyboard",
+				AppDelegate.swift,
+				Assets.xcassets,
+				SceneDelegate.swift,
+				ViewController.swift,
+			);
+			target = 057318402D8FC41700E4D570 /* Terminal_iOS */;
+		};
 		05D2425A2D6F576000E1D5FC /* Exceptions for "TerminalKit_macOS" folder in "TerminalKit_macOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			publicHeaders = (
@@ -82,6 +108,15 @@
 		0511801E2D79EE90005B867B /* Terminal_macOS */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Terminal_macOS;
+			sourceTree = "<group>";
+		};
+		057318712D8FC42300E4D570 /* Terminal_iOS */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				057318782D8FC42300E4D570 /* Exceptions for "Terminal_iOS" folder in "Terminal_macOS" target */,
+				057318792D8FC42300E4D570 /* Exceptions for "Terminal_iOS" folder in "Terminal_iOS" target */,
+			);
+			path = Terminal_iOS;
 			sourceTree = "<group>";
 		};
 		05D242552D6F576000E1D5FC /* TerminalKit_macOS */ = {
@@ -113,6 +148,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0573183E2D8FC41700E4D570 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		05D242502D6F576000E1D5FC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -137,6 +179,7 @@
 		0511802E2D79EEC4005B867B /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				057318712D8FC42300E4D570 /* Terminal_iOS */,
 				0511801E2D79EE90005B867B /* Terminal_macOS */,
 			);
 			name = Tests;
@@ -161,6 +204,7 @@
 				05D242532D6F576000E1D5FC /* TerminalKit.framework */,
 				05D242652D6F57D600E1D5FC /* TerminalKit.framework */,
 				0511801D2D79EE90005B867B /* Terminal_macOS.app */,
+				057318412D8FC41700E4D570 /* Terminal_iOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -240,12 +284,32 @@
 			);
 			fileSystemSynchronizedGroups = (
 				0511801E2D79EE90005B867B /* Terminal_macOS */,
+				057318712D8FC42300E4D570 /* Terminal_iOS */,
 			);
 			name = Terminal_macOS;
 			packageProductDependencies = (
 			);
 			productName = Terminal_macOS;
 			productReference = 0511801D2D79EE90005B867B /* Terminal_macOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		057318402D8FC41700E4D570 /* Terminal_iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 057318552D8FC41900E4D570 /* Build configuration list for PBXNativeTarget "Terminal_iOS" */;
+			buildPhases = (
+				0573183D2D8FC41700E4D570 /* Sources */,
+				0573183E2D8FC41700E4D570 /* Frameworks */,
+				0573183F2D8FC41700E4D570 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Terminal_iOS;
+			packageProductDependencies = (
+			);
+			productName = Terminal_iOS;
+			productReference = 057318412D8FC41700E4D570 /* Terminal_iOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 		05D242522D6F576000E1D5FC /* TerminalKit_macOS */ = {
@@ -311,6 +375,9 @@
 					0511801C2D79EE90005B867B = {
 						CreatedOnToolsVersion = 16.2;
 					};
+					057318402D8FC41700E4D570 = {
+						CreatedOnToolsVersion = 16.2;
+					};
 					05D242522D6F576000E1D5FC = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -340,12 +407,20 @@
 				05D242642D6F57D600E1D5FC /* TerminalKit_iOS */,
 				05DF74B32D6F5D60000EB93D /* Install */,
 				0511801C2D79EE90005B867B /* Terminal_macOS */,
+				057318402D8FC41700E4D570 /* Terminal_iOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		0511801B2D79EE90005B867B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0573183F2D8FC41700E4D570 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -370,6 +445,13 @@
 
 /* Begin PBXSourcesBuildPhase section */
 		051180192D79EE90005B867B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0573183D2D8FC41700E4D570 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -460,6 +542,73 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		057318522D8FC41900E4D570 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TR2DNF3P93;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ../Tests/Terminal_iOS/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.steel-wheels.BasicKit.Terminal.iOS.Terminal-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		057318532D8FC41900E4D570 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TR2DNF3P93;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ../Tests/Terminal_iOS/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.github.steel-wheels.BasicKit.Terminal.iOS.Terminal-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -765,6 +914,15 @@
 			buildConfigurations = (
 				0511802A2D79EE93005B867B /* Debug */,
 				0511802B2D79EE93005B867B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		057318552D8FC41900E4D570 /* Build configuration list for PBXNativeTarget "Terminal_iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				057318522D8FC41900E4D570 /* Debug */,
+				057318532D8FC41900E4D570 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
