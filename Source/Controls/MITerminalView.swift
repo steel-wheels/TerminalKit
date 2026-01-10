@@ -12,18 +12,7 @@ import  AppKit
 import  UIKit
 #endif  // os(OSX)
 
-public class MITerminalView: MIInterfaceView
+public class MITerminalView: MITextView
 {
-        public override func setup(frame frm: CGRect) {
-                super.setup(nibName: "MMITerminalViewCore", frameSize: frm.size)
-        }
-
-        private func coreTerminalView() -> MITerminalViewCore {
-                if let core: MITerminalViewCore = super.coreView() {
-                        return core
-                } else {
-                        fatalError("Failed to get core view")
-                }
-        }
 }
 

@@ -9,14 +9,16 @@
 /* Begin PBXBuildFile section */
 		052DA15C2F0EAE0800AE2125 /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0537CB112F0EACB000F192FC /* MultiDataKit.xcframework */; };
 		052DA15F2F0EAE1D00AE2125 /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0537CB152F0EACCB00F192FC /* MultiUIKit.xcframework */; };
-		0537CABB2F0EAB8400F192FC /* MITerminalViewCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0537CABA2F0EAB8400F192FC /* MITerminalViewCore.swift */; };
-		0537CABC2F0EAB8400F192FC /* MITerminalViewCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0537CABA2F0EAB8400F192FC /* MITerminalViewCore.swift */; };
 		0537CB122F0EACB000F192FC /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0537CB112F0EACB000F192FC /* MultiDataKit.xcframework */; };
 		0537CB162F0EACCC00F192FC /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0537CB152F0EACCB00F192FC /* MultiUIKit.xcframework */; };
-		053ED0EF2F0EA1F7001BC673 /* MITerminalViewCore.xib in Resources */ = {isa = PBXBuildFile; fileRef = 053ED0EE2F0EA1F7001BC673 /* MITerminalViewCore.xib */; };
-		053ED0F42F0EA2AC001BC673 /* MITerminalViewCore.xib in Resources */ = {isa = PBXBuildFile; fileRef = 053ED0F22F0EA2AC001BC673 /* MITerminalViewCore.xib */; };
 		05D634E42F0FF6940058E2A3 /* MITerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D634E32F0FF6940058E2A3 /* MITerminalView.swift */; };
 		05D634E52F0FF6940058E2A3 /* MITerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D634E32F0FF6940058E2A3 /* MITerminalView.swift */; };
+		05F904372F11C9BB00953FE5 /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0537CB112F0EACB000F192FC /* MultiDataKit.xcframework */; };
+		05F904382F11C9BB00953FE5 /* MultiDataKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0537CB112F0EACB000F192FC /* MultiDataKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		05F9043A2F11C9D300953FE5 /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0537CB152F0EACCB00F192FC /* MultiUIKit.xcframework */; };
+		05F9043B2F11C9D300953FE5 /* MultiUIKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0537CB152F0EACCB00F192FC /* MultiUIKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		05F9043D2F11C9D400953FE5 /* TerminalKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F9043C2F11C9D400953FE5 /* TerminalKit.xcframework */; };
+		05F9043E2F11C9D400953FE5 /* TerminalKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05F9043C2F11C9D400953FE5 /* TerminalKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,16 +38,30 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		05F904392F11C9BB00953FE5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				05F9043E2F11C9D400953FE5 /* TerminalKit.xcframework in Embed Frameworks */,
+				05F9043B2F11C9D300953FE5 /* MultiUIKit.xcframework in Embed Frameworks */,
+				05F904382F11C9BB00953FE5 /* MultiDataKit.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		050AA74E2F0E9F0300FD2057 /* TerminalKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TerminalKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0537CABA2F0EAB8400F192FC /* MITerminalViewCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MITerminalViewCore.swift; path = ../Source/Controls/MITerminalViewCore.swift; sourceTree = SOURCE_ROOT; };
 		0537CB112F0EACB000F192FC /* MultiDataKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiDataKit.xcframework; path = ../../../Library/Frameworks/MultiDataKit.xcframework; sourceTree = "<group>"; };
 		0537CB152F0EACCB00F192FC /* MultiUIKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiUIKit.xcframework; path = ../../../Library/Frameworks/MultiUIKit.xcframework; sourceTree = "<group>"; };
-		053ED0EE2F0EA1F7001BC673 /* MITerminalViewCore.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MITerminalViewCore.xib; sourceTree = "<group>"; };
-		053ED0F22F0EA2AC001BC673 /* MITerminalViewCore.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MITerminalViewCore.xib; sourceTree = "<group>"; };
 		0592E4E12F0E9DB40043817A /* TerminalKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TerminalKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05D634E32F0FF6940058E2A3 /* MITerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MITerminalView.swift; path = ../Source/Controls/MITerminalView.swift; sourceTree = SOURCE_ROOT; };
 		05F904292F11C89B00953FE5 /* UnitTest_macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnitTest_macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		05F9043C2F11C9D400953FE5 /* TerminalKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = TerminalKit.xcframework; path = ../../../Library/Frameworks/TerminalKit.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -89,6 +105,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05F9043D2F11C9D400953FE5 /* TerminalKit.xcframework in Frameworks */,
+				05F9043A2F11C9D300953FE5 /* MultiUIKit.xcframework in Frameworks */,
+				05F904372F11C9BB00953FE5 /* MultiDataKit.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,6 +117,7 @@
 		0537CB102F0EACAE00F192FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				05F9043C2F11C9D400953FE5 /* TerminalKit.xcframework */,
 				0537CB152F0EACCB00F192FC /* MultiUIKit.xcframework */,
 				0537CB112F0EACB000F192FC /* MultiDataKit.xcframework */,
 			);
@@ -112,24 +132,6 @@
 			name = Source;
 			path = ../Source;
 			sourceTree = "<group>";
-		};
-		053ED0F02F0EA217001BC673 /* macOS */ = {
-			isa = PBXGroup;
-			children = (
-				053ED0EE2F0EA1F7001BC673 /* MITerminalViewCore.xib */,
-			);
-			name = macOS;
-			path = ../Source/Controls/macOS;
-			sourceTree = SOURCE_ROOT;
-		};
-		053ED0F12F0EA271001BC673 /* iOS */ = {
-			isa = PBXGroup;
-			children = (
-				053ED0F22F0EA2AC001BC673 /* MITerminalViewCore.xib */,
-			);
-			name = iOS;
-			path = ../Source/Controls/iOS;
-			sourceTree = SOURCE_ROOT;
 		};
 		0592E4D72F0E9DB40043817A = {
 			isa = PBXGroup;
@@ -157,9 +159,6 @@
 			isa = PBXGroup;
 			children = (
 				05D634E32F0FF6940058E2A3 /* MITerminalView.swift */,
-				0537CABA2F0EAB8400F192FC /* MITerminalViewCore.swift */,
-				053ED0F12F0EA271001BC673 /* iOS */,
-				053ED0F02F0EA217001BC673 /* macOS */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -267,6 +266,7 @@
 				05F904252F11C89B00953FE5 /* Sources */,
 				05F904262F11C89B00953FE5 /* Frameworks */,
 				05F904272F11C89B00953FE5 /* Resources */,
+				05F904392F11C9BB00953FE5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -333,7 +333,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				053ED0F42F0EA2AC001BC673 /* MITerminalViewCore.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,7 +340,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				053ED0EF2F0EA1F7001BC673 /* MITerminalViewCore.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -360,7 +358,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				05D634E42F0FF6940058E2A3 /* MITerminalView.swift in Sources */,
-				0537CABB2F0EAB8400F192FC /* MITerminalViewCore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,7 +366,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				05D634E52F0FF6940058E2A3 /* MITerminalView.swift in Sources */,
-				0537CABC2F0EAB8400F192FC /* MITerminalViewCore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
