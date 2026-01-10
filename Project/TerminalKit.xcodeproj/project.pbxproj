@@ -14,11 +14,8 @@
 		05D634E42F0FF6940058E2A3 /* MITerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D634E32F0FF6940058E2A3 /* MITerminalView.swift */; };
 		05D634E52F0FF6940058E2A3 /* MITerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D634E32F0FF6940058E2A3 /* MITerminalView.swift */; };
 		05F904372F11C9BB00953FE5 /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0537CB112F0EACB000F192FC /* MultiDataKit.xcframework */; };
-		05F904382F11C9BB00953FE5 /* MultiDataKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0537CB112F0EACB000F192FC /* MultiDataKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05F9043A2F11C9D300953FE5 /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0537CB152F0EACCB00F192FC /* MultiUIKit.xcframework */; };
-		05F9043B2F11C9D300953FE5 /* MultiUIKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0537CB152F0EACCB00F192FC /* MultiUIKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05F9043D2F11C9D400953FE5 /* TerminalKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05F9043C2F11C9D400953FE5 /* TerminalKit.xcframework */; };
-		05F9043E2F11C9D400953FE5 /* TerminalKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05F9043C2F11C9D400953FE5 /* TerminalKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,22 +34,6 @@
 			remoteInfo = TerminalKit_macOS;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		05F904392F11C9BB00953FE5 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				05F9043E2F11C9D400953FE5 /* TerminalKit.xcframework in Embed Frameworks */,
-				05F9043B2F11C9D300953FE5 /* MultiUIKit.xcframework in Embed Frameworks */,
-				05F904382F11C9BB00953FE5 /* MultiDataKit.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		050AA74E2F0E9F0300FD2057 /* TerminalKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TerminalKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -266,7 +247,6 @@
 				05F904252F11C89B00953FE5 /* Sources */,
 				05F904262F11C89B00953FE5 /* Frameworks */,
 				05F904272F11C89B00953FE5 /* Resources */,
-				05F904392F11C9BB00953FE5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

@@ -20,8 +20,12 @@ public class MITerminalView: MITextView
                 let storage = self.textStorage
 
                 let commands: Array<MITextStorage.Command> = [
-                        .setFont(MIFont.terminalFont(size: 12.0))
+                        .setFont(MIFont.terminalFont(size: 12.0)),
+                        .setTextColor(MIColor.green),
+                        .setBackgroundColor(MIColor.black)
                 ]
                 storage.execute(commands: commands)
+
+                self.insertionPointColor = MIColor.green
         }
 }
