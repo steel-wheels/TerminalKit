@@ -18,6 +18,13 @@ class ViewController: NSViewController
 
                 // Do any additional setup after loading the view.
                 mTerminalView.backgroundColor = MIColor.black
+
+                // store message
+                let storage = mTerminalView.textStorage
+                let commands: Array<MITextStorage.Command> = [
+                        .insert("Hello, World !!")
+                ]
+                storage.execute(commands: commands)
         }
 
         override var representedObject: Any? {

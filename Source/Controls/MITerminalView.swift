@@ -14,5 +14,14 @@ import  UIKit
 
 public class MITerminalView: MITextView
 {
-}
+        open override func setup(frame frm: CGRect) {
+                super.setup(frame: frm)
 
+                let storage = self.textStorage
+
+                let commands: Array<MITextStorage.Command> = [
+                        .setFont(MIFont.terminalFont(size: 12.0))
+                ]
+                storage.execute(commands: commands)
+        }
+}
