@@ -17,14 +17,12 @@ public class MITerminalView: MITextView
         open override func setup(frame frm: CGRect) {
                 super.setup(frame: frm)
 
-                let storage = self.textStorage
-
-                let commands: Array<MITextStorage.Command> = [
+                let commands: Array<MITextEditCommand> = [
                         .setFont(MIFont.terminalFont(size: 12.0)),
                         .setTextColor(MIColor.green),
                         .setBackgroundColor(MIColor.black)
                 ]
-                storage.execute(commands: commands)
+                self.execute(commands: commands)
 
                 self.insertionPointColor = MIColor.green
         }

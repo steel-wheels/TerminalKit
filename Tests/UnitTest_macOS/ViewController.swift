@@ -21,10 +21,10 @@ class ViewController: NSViewController
 
                 // store message
                 let storage = mTerminalView.textStorage
-                let commands: Array<MITextStorage.Command> = [
-                        .insert("Hello, World !!")
+                let commands: Array<MITextEditCommand> = [
+                        .insertText("Hello, World !!")
                 ]
-                storage.execute(commands: commands)
+                mTerminalView.execute(commands: commands)
         }
 
         override var representedObject: Any? {
