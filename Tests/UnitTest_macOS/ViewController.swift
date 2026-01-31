@@ -19,8 +19,13 @@ class ViewController: NSViewController
                 // Do any additional setup after loading the view.
                 mTerminalView.backgroundColor = MIColor.black
 
+                let strg = mTerminalView.storage
+                let idx  = strg.currentIndex
+                let char = strg.character(at: idx)
+                let attr = strg.attribute(at: idx)
+                NSLog("VC: char=\"\(char)\", attr=\(attr.description)")
+
                 // store message
-                let storage = mTerminalView.textStorage
                 let commands: Array<MITextEditCommand> = [
                         .insertText("Hello, World !!")
                 ]
