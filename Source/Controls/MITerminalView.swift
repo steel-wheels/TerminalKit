@@ -5,17 +5,18 @@
  *   Copyright (C) 2025 Steel Wheels Project
  */
 
-import  MultiUIKit
 #if os(OSX)
 import  Cocoa
 #else   // os(OSX)
 import  UIKit
 #endif  // os(OSX)
+import  MultiUIKit
 import MultiDataKit
 
 public class MITerminalView: MITextView
 {
         private var mFileInterface      = MIFileInterface()
+        private var mCursor:            MICursor? = nil
 
         open override func setup(frame frm: CGRect) {
                 super.setup(frame: frm)
@@ -34,12 +35,14 @@ public class MITerminalView: MITextView
 
                 let commands: Array<MITextEditCommand> = [
                         .setFont(MIFont.terminalFont(size: 12.0)),
-                        .setTextColor(MIColor.green),
-                        .setBackgroundColor(MIColor.black)
+                        .setTextColor(.green),
+                        .setBackgroundColor(.black)
                 ]
                 self.execute(commands: commands)
 
                 self.insertionPointColor = MIColor.green
+
+                mCursor = MICursor(storage: super.storage)
         }
 
         public var inputWriteHandle: FileHandle { get {
@@ -61,6 +64,8 @@ public class MITerminalView: MITextView
         }
 
         private func execute(escapeCode code: MIEscapeCode) {
+                //switch code {
+                //}
         }
 }
 
