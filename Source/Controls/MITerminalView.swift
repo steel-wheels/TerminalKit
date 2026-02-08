@@ -16,7 +16,15 @@ import MultiDataKit
 public class MITerminalView: MITextView
 {
         private var mFileInterface      = MIFileInterface()
-        private var mCursor:            MICursor? = nil
+        private var mCursor             = MICursor()
+        private var mTimer:             Timer?    = nil
+
+        deinit {
+                if let timer = mTimer {
+                        timer.invalidate()
+                        mTimer = nil
+                }
+        }
 
         open override func setup(frame frm: CGRect) {
                 super.setup(frame: frm)
@@ -42,7 +50,10 @@ public class MITerminalView: MITextView
 
                 self.insertionPointColor = MIColor.green
 
-                mCursor = MICursor(storage: super.storage)
+                /*
+                mTimer  = Timer.scheduledTimer(withTimeInterval: 0.75, repeats: true, block: {
+                        (_ timer: Timer) -> Void in self.blink()
+                })*/
         }
 
         public var inputWriteHandle: FileHandle { get {
@@ -64,8 +75,22 @@ public class MITerminalView: MITextView
         }
 
         private func execute(escapeCode code: MIEscapeCode) {
-                //switch code {
-                //}
+                var commands: Array<MITextEditCommand> = []
+                switch code {
+                case .insertString(let str):
+                        commands.append(.insertText(str))
+                case .moveCursorToHome:
+                        commands.append(.moveCursorToHome)
+                default:
+                        break
+                }
+                super.execute(commands: commands)
+        }
+
+        private func blink() {
+                if mCursor.isVisible {
+                        execute(escapeCodes: mCursor.generateCode())
+                }
         }
 }
 

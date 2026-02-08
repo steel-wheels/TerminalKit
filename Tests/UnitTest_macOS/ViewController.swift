@@ -17,16 +17,15 @@ class ViewController: NSViewController
                 super.viewDidLoad()
 
                 // Do any additional setup after loading the view.
-                mTerminalView.backgroundColor = MIColor.black
-
-                let strg = mTerminalView.storage
-                let idx  = strg.currentIndex
-                let char = strg.character(at: idx)
-                let attr = strg.attribute(at: idx)
-                NSLog("VC: char=\"\(char)\", attr=\(attr.description)")
+                let textcol = MIColor.green
+                let backcol = MIColor.black
+                mTerminalView.textColor       = textcol
+                mTerminalView.backgroundColor = backcol
 
                 // store message
                 let commands: Array<MITextEditCommand> = [
+                        .setTextColor(textcol),
+                        .setBackgroundColor(backcol),
                         .insertText("Hello, World !!")
                 ]
                 mTerminalView.execute(commands: commands)

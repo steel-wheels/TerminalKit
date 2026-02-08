@@ -20,18 +20,29 @@ public class MICursor
                 case reverse    = 1
         }
 
-        private var mTextStorage: MITextStorage
-        private var mState:       State
+        private var mIsVisible:                 Bool
+        private var mState:                     State
+        private var mBackgroundColor:           MITextColor
 
-        public init(storage strg: MITextStorage){
-                mTextStorage    = strg
-                mState          = .normal
+        public init(){
+                mIsVisible              = false
+                mState                  = .normal
+                mBackgroundColor        = .white(false)
+        }
+
+        public var isVisible: Bool {
+                get      { return mIsVisible }
+                set(val) { mIsVisible = val }
         }
 
         public func generateCode() -> Array<MIEscapeCode> {
-                let codes: Array<MIEscapeCode> = [
-
-                ]
-                return codes
+                if mIsVisible {
+                        let codes: Array<MIEscapeCode> = [
+                                .eraceFromCursorWithLength(1)
+                        ]
+                        return codes
+                } else {
+                        return []
+                }
         }
 }
