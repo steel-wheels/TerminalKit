@@ -16,7 +16,6 @@ import MultiDataKit
 public class MITerminalView: MITextView
 {
         private var mFileInterface      = MIFileInterface()
-        private var mCursor             = MICursor()
         private var mTimer:             Timer?    = nil
 
         deinit {
@@ -88,9 +87,6 @@ public class MITerminalView: MITextView
         }
 
         private func blink() {
-                if mCursor.isVisible {
-                        execute(escapeCodes: mCursor.generateCode())
-                }
         }
 }
 
