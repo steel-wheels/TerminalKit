@@ -10,7 +10,7 @@ import  Cocoa
 #else   // os(OSX)
 import  UIKit
 #endif  // os(OSX)
-import  MultiUIKit
+import MultiUIKit
 import MultiDataKit
 
 public class MITerminalView: MITextView
@@ -49,10 +49,12 @@ public class MITerminalView: MITextView
 
                 self.insertionPointColor = MIColor.green
 
-                /*
-                mTimer  = Timer.scheduledTimer(withTimeInterval: 0.75, repeats: true, block: {
-                        (_ timer: Timer) -> Void in self.blink()
-                })*/
+                #if os(OSX)
+                super.set(keyEventReceiver: {
+                        (_ down: Bool, _ event: NSEvent) -> Bool in
+                        return self.keydown(isKeyDown: down, event: event)
+                })
+                #endif
         }
 
         public var inputWriteHandle: FileHandle { get {
@@ -85,6 +87,18 @@ public class MITerminalView: MITextView
                 }
                 super.execute(commands: commands)
         }
+
+        #if os(OSX)
+        private func keydown(isKeyDown down: Bool, event evt: NSEvent) -> Bool {
+                if down {
+                        let codes = MIKeyCode.generate(event: evt)
+                        for code in codes {
+                                NSLog("keydown: \(code.description)")
+                        }
+                }
+                return true // needless to continue
+        }
+        #endif
 
         private func blink() {
         }
