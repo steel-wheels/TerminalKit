@@ -15,13 +15,13 @@ import MultiDataKit
 
 public class MITerminalView: MITextView
 {
-        private var mFileInterface      = MIFileInterface()
-        private var mTimer:             Timer?    = nil
+        private var mFileInterface              = MIFileInterface()
+        private var mCursorTimer: Timer?        = nil
 
         deinit {
-                if let timer = mTimer {
+                if let timer = mCursorTimer {
                         timer.invalidate()
-                        mTimer = nil
+                        mCursorTimer = nil
                 }
         }
 
@@ -55,6 +55,16 @@ public class MITerminalView: MITextView
                         return self.keydown(isKeyDown: down, event: event)
                 })
                 #endif
+
+                #if os(OSX)
+                mCursorTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
+                        DispatchQueue.main.async {
+                                self.blinkCursor()
+                        }
+                }
+                #endif
+
+                self.cursor.visible = true
         }
 
         public var inputWriteHandle: FileHandle { get {
@@ -100,7 +110,10 @@ public class MITerminalView: MITextView
         }
         #endif
 
-        private func blink() {
+        #if os(OSX)
+        private func blinkCursor() {
+                self.execute(commands: [.blinkCursor(!self.cursor.blink)])
         }
+        #endif
 }
 
