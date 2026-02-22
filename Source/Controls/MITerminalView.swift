@@ -94,6 +94,8 @@ public class MITerminalView: MITextView
                         commands.append(.moveCursorForward(num))
                 case .moveCursorToHome:
                         commands.append(.moveCursorToHome)
+                case .makeCursorVisible(let flag):
+                        commands.append(.setCursorVisible(flag))
                 default:
                         break
                 }
@@ -145,19 +147,20 @@ public class MITerminalView: MITextView
                 case .funcCode(let num):
                         let cmds = generateCommandFromFunctionKeyInput(functionNum: num)
                         result.append(contentsOf: cmds)
-                case .backtabCode:
+                case .deleteCode:
                         result.append(.moveCursorBackward(1))
                         result.append(.eraceFromCursorWithLength(1))
+                case .carriageReturnCode, .newlineCode:
+                        result.append(.insertString("\n"))
+                        result.append(.moveCursorForward(1))
                 default:
                         break
                 /*
                  case backtabCode
                  case beginCode
                  case breakCode
-                 case carriageReturnCode
                  case clearDisplayCode
                  case clearLineCode
-                 case deleteCode
                  case deleteCharacterCode
                  case deleteForwardCode
                  case deleteLineCode
