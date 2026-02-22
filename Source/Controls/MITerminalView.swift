@@ -90,6 +90,8 @@ public class MITerminalView: MITextView
                 switch code {
                 case .insertString(let str):
                         commands.append(.insertText(str))
+                case .moveCursorForward(let num):
+                        commands.append(.moveCursorForward(num))
                 case .moveCursorToHome:
                         commands.append(.moveCursorToHome)
                 default:
@@ -103,12 +105,114 @@ public class MITerminalView: MITextView
                 if down {
                         let codes = MIKeyCode.generate(event: evt)
                         for code in codes {
-                                NSLog("keydown: \(code.description)")
+                                //NSLog("keydown: \(code.description)")
+                                execute(keyCode: code)
                         }
                 }
                 return true // needless to continue
         }
         #endif
+
+        private func execute(keyCode code: MIKeyCode) {
+                let ecodes = generateCommandFromKeyInput(keyCode: code)
+
+                /* dump ecode */
+                var keynum = 0
+                for ecode in ecodes {
+                        NSLog("keycode: \(keynum) \(ecode.description())")
+                        keynum += 1
+                }
+
+                /* execute code */
+                execute(escapeCodes: ecodes)
+        }
+
+        private func generateCommandFromKeyInput(keyCode code: MIKeyCode) -> Array<MIEscapeCode> {
+                let encoding: String.Encoding = .utf8
+
+                var result: Array<MIEscapeCode> = []
+                switch code {
+                case .string(let str):
+                        let len = str.lengthOfBytes(using: encoding)
+                        result.append(.insertString(str))
+                        result.append(.moveCursorForward(len))
+                case .command(let key):
+                        let cmds = generateCommandFromCommandKeyInput(commandKey: key)
+                        result.append(contentsOf: cmds)
+                case .control(let key):
+                        let cmds = generateCommandFromControlKeyInput(controlKey: key)
+                        result.append(contentsOf: cmds)
+                case .funcCode(let num):
+                        let cmds = generateCommandFromFunctionKeyInput(functionNum: num)
+                        result.append(contentsOf: cmds)
+                case .backtabCode:
+                        result.append(.moveCursorBackward(1))
+                        result.append(.eraceFromCursorWithLength(1))
+                default:
+                        break
+                /*
+                 case backtabCode
+                 case beginCode
+                 case breakCode
+                 case carriageReturnCode
+                 case clearDisplayCode
+                 case clearLineCode
+                 case deleteCode
+                 case deleteCharacterCode
+                 case deleteForwardCode
+                 case deleteLineCode
+                 case downArrowCode
+                 case endCode
+                 case enterCode
+                 case executeCode
+                 case findCode
+                 case formfeedCode
+                 case helpCode
+                 case homeCode
+                 case insertCode
+                 case insertCharacterCode
+                 case insertLineCode
+                 case leftArrowCode
+                 case lineSeparatorCode
+                 case menuCode
+                 case menuSwitchCode
+                 case newlineCode
+                 case nextCode
+                 case pageDownCode
+                 case pageUpCode
+                 case paragraphSeparatorCode
+                 case pauseCode
+                 case prevCode
+                 case printCode
+                 case printScreenCode
+                 case redoCode
+                 case resetCode
+                 case rightArrowCode
+                 case scrollLockCode
+                 case selectCode
+                 case stopCode
+                 case sysReqCode
+                 case systemCode
+                 case tabCode
+                 case undoCode
+                 case upArrowCode
+                 case userCode
+                 */
+                }
+                return result
+        }
+
+        private func generateCommandFromCommandKeyInput(commandKey key: String) -> Array<MIEscapeCode> {
+                return []
+        }
+
+        private func generateCommandFromControlKeyInput(controlKey key: Character) -> Array<MIEscapeCode> {
+                return []
+        }
+
+        private func generateCommandFromFunctionKeyInput(functionNum num: Int) -> Array<MIEscapeCode> {
+                return []
+        }
 
         #if os(OSX)
         private func blinkCursor() {
