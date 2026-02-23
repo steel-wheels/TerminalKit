@@ -133,6 +133,12 @@ public class MITerminalView: MITextView
                 let encoding: String.Encoding = .utf8
 
                 var result: Array<MIEscapeCode> = []
+
+                let curvis = super.cursor.visible
+                if curvis {
+                        result.append(.makeCursorVisible(false))
+                }
+
                 switch code {
                 case .string(let str):
                         let len = str.lengthOfBytes(using: encoding)
@@ -201,6 +207,9 @@ public class MITerminalView: MITextView
                  case upArrowCode
                  case userCode
                  */
+                }
+                if curvis {
+                        result.append(.makeCursorVisible(true))
                 }
                 return result
         }
