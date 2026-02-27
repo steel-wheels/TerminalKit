@@ -59,7 +59,8 @@ public class MITerminalView: MITextView
                 #if os(OSX)
                 mCursorTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
                         DispatchQueue.main.async {
-                                self.blinkCursor()
+                                let ecode: MIEscapeCode = .blinkCursor(!self.cursor.blink)
+                                self.mFileInterface.inputWriteHandle.write(string: ecode.encode())
                         }
                 }
                 #endif
@@ -92,10 +93,14 @@ public class MITerminalView: MITextView
                         commands.append(.insertText(str))
                 case .moveCursorForward(let num):
                         commands.append(.moveCursorForward(num))
+                case .moveCursorBackward(let num):
+                        commands.append(.moveCursorBackward(num))
                 case .moveCursorToHome:
                         commands.append(.moveCursorToHome)
                 case .makeCursorVisible(let flag):
                         commands.append(.setCursorVisible(flag))
+                case .blinkCursor(let flag):
+                        commands.append(.blinkCursor(flag))
                 default:
                         break
                 }
@@ -125,8 +130,12 @@ public class MITerminalView: MITextView
                         keynum += 1
                 }
 
-                /* execute code */
-                execute(escapeCodes: ecodes)
+                /* put code into file stream */
+                var codestr = ""
+                for ecode in ecodes {
+                        codestr += ecode.encode()
+                }
+                mFileInterface.inputWriteHandle.write(string: codestr)
         }
 
         private func generateCommandFromKeyInput(keyCode code: MIKeyCode) -> Array<MIEscapeCode> {
@@ -158,6 +167,10 @@ public class MITerminalView: MITextView
                         result.append(.eraceFromCursorWithLength(1))
                 case .carriageReturnCode, .newlineCode:
                         result.append(.insertString("\n"))
+                        result.append(.moveCursorForward(1))
+                case .leftArrowCode:
+                        result.append(.moveCursorBackward(1))
+                case .rightArrowCode:
                         result.append(.moveCursorForward(1))
                 default:
                         break
@@ -196,7 +209,6 @@ public class MITerminalView: MITextView
                  case printScreenCode
                  case redoCode
                  case resetCode
-                 case rightArrowCode
                  case scrollLockCode
                  case selectCode
                  case stopCode
@@ -225,11 +237,5 @@ public class MITerminalView: MITextView
         private func generateCommandFromFunctionKeyInput(functionNum num: Int) -> Array<MIEscapeCode> {
                 return []
         }
-
-        #if os(OSX)
-        private func blinkCursor() {
-                self.execute(commands: [.blinkCursor(!self.cursor.blink)])
-        }
-        #endif
 }
 
