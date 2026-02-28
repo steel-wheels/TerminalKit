@@ -231,7 +231,13 @@ public class MITerminalView: MITextView
         }
 
         private func generateCommandFromControlKeyInput(controlKey key: Character) -> Array<MIEscapeCode> {
-                return []
+                var result: Array<MIEscapeCode> = []
+                switch key {
+                case "b": result.append(.moveCursorBackward(1))
+                case "f": result.append(.moveCursorForward(1))
+                default:  break
+                }
+                return result
         }
 
         private func generateCommandFromFunctionKeyInput(functionNum num: Int) -> Array<MIEscapeCode> {
