@@ -15,8 +15,15 @@ import MultiDataKit
 
 public class MITerminalView: MITextView
 {
-        private var mFileInterface              = MIFileInterface()
-        private var mCursorTimer: Timer?        = nil
+        #if os(OSX)
+        public typealias AcceptKeyDownFunc = (_ : Array<MIEscapeCode>) -> Array<MIEscapeCode>?
+        #endif
+
+        private var mFileInterface                              = MIFileInterface()
+        private var mCursorTimer:       Timer?                  = nil
+        #if os(OSX)
+        private var mAcceptKeyDownFunc: AcceptKeyDownFunc?      = nil
+        #endif
 
         deinit {
                 if let timer = mCursorTimer {
@@ -60,13 +67,31 @@ public class MITerminalView: MITextView
                 mCursorTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
                         DispatchQueue.main.async {
                                 let ecode: MIEscapeCode = .blinkCursor(!self.cursor.blink)
-                                self.mFileInterface.inputWriteHandle.write(string: ecode.encode())
+                                self.put(escapeCodes: [ecode], withCursorControl: false)
                         }
                 }
                 #endif
 
                 self.cursor.visible = true
         }
+
+        #if os(OSX)
+        private func keydown(isKeyDown down: Bool, event evt: NSEvent) -> Bool {
+                guard down else {
+                        return true
+                }
+                let ecodes = MIEscapeCode.decode(event: evt)
+                if let accfunc = mAcceptKeyDownFunc {
+                        if let modcodes = accfunc(ecodes) {
+                                put(escapeCodes: modcodes, withCursorControl: true)
+                        }
+                } else {
+                        put(escapeCodes: ecodes, withCursorControl: true)
+                }
+                return true
+        }
+        #endif
+
 
         public var inputWriteHandle: FileHandle { get {
                 return mFileInterface.inputWriteHandle
@@ -91,11 +116,14 @@ public class MITerminalView: MITextView
                 switch code {
                 case .insertString(let str):
                         commands.append(.insertText(str))
+                /* key */
+                case .carriageReturnKey:
+                        commands.append(.insertNewline)
                 case .moveCursorForward(let num):
                         commands.append(.moveCursorForward(num))
                 case .moveCursorBackward(let num):
                         commands.append(.moveCursorBackward(num))
-                case .moveCursorToHome:
+                case .homeKey:
                         commands.append(.moveCursorToHome)
                 case .makeCursorVisible(let flag):
                         commands.append(.setCursorVisible(flag))
@@ -103,145 +131,81 @@ public class MITerminalView: MITextView
                         commands.append(.blinkCursor(flag))
                 default:
                         break
+                /*
+                 /* Key */
+                 case backspaceKey
+                 case carriageReturnKey
+                 case deleteKey
+                 case arrowKey(MIArrowKeyType)
+                 //case enterKey                         -> merged with newline
+                 case functionKey(Int)
+                 case formFeedKey
+                 case helpKey
+                 case homeKey
+                 case insertKey
+                 case menuKey
+                 case newlineKey
+                 case pageUpKey
+                 case pageDownKey
+                 case tabKey
+                 case commandKey(Character)
+                 case controlKey(Character)
+
+                 /* Cursor Controls */
+                 case moveCursorTo(Int, Int)                     // (line, column)
+                 case moveCursorUp(Int)                          // (lines)
+                 case moveCursorDown(Int)                        // (lines)
+                 case moveCursorForward(Int)                     // (columns)
+                 case moveCursorBackward(Int)                    // (columns)
+                 case moveCursorToBeginingOfNextLine(Int)         // (lines)
+                 case moveCursorToBeginingOfPrevLine(Int)         // (lines)
+                 case moveCursorToColumn(Int)                    // (column)
+                 case requestCursorPosition
+                 case moveCursor1LineUp
+                 case saveCursorPosition(Int)                    // 0:DEC, 1:SCO
+                 case restoreCursorPosition(Int)                 // 0:DEC, 1:SCO
+                 case makeCursorVisible(Bool)
+                 case blinkCursor(Bool)                          // Custom defined
+
+                 /* screen */
+                 case restoreScreen
+                 case saveScreen
+                 case enableAlternativeBuffer(Bool)
+
+                 /* Erace operation */
+                 case eraceFromCursorWithLength(Int)             // (length)
+                 case eraceFromCursorUntilEndOfScreen
+                 case eraceFromToBeginningOfScreen
+                 case eraceEntireScreen
+                 case eraceSavedLines
+                 case eraceFromCusorToEndOfLine
+                 case eraceStartOfLineToCursor
+                 case eraceEntireLine
+
+                 /*  Charactet Attribute */
+                 case setCharacterAttribute(Array<MICharacterAttribute>)
+                 case resetAllCharacterAttributes
+
+                 /* Character Color */
+                 case setColor(MITextColor)
+                 */
                 }
                 super.execute(commands: commands)
         }
 
-        #if os(OSX)
-        private func keydown(isKeyDown down: Bool, event evt: NSEvent) -> Bool {
-                if down {
-                        let codes = MIKeyCode.generate(event: evt)
-                        for code in codes {
-                                //NSLog("keydown: \(code.description)")
-                                execute(keyCode: code)
-                        }
+        private func put(escapeCodes codes: Array<MIEscapeCode>, withCursorControl ctrl: Bool) {
+                let doctrl = ctrl && self.cursor.visible
+                var exestr = ""
+                if doctrl {
+                        exestr += MIEscapeCode.makeCursorVisible(false).encode()
                 }
-                return true // needless to continue
-        }
-        #endif
-
-        private func execute(keyCode code: MIKeyCode) {
-                let ecodes = generateCommandFromKeyInput(keyCode: code)
-
-                /* dump ecode */
-                var keynum = 0
-                for ecode in ecodes {
-                        NSLog("keycode: \(keynum) \(ecode.description())")
-                        keynum += 1
+                for execode in codes {
+                        exestr += execode.encode()
                 }
-
-                /* put code into file stream */
-                var codestr = ""
-                for ecode in ecodes {
-                        codestr += ecode.encode()
+                if doctrl {
+                        exestr += MIEscapeCode.makeCursorVisible(true).encode()
                 }
-                mFileInterface.inputWriteHandle.write(string: codestr)
-        }
-
-        private func generateCommandFromKeyInput(keyCode code: MIKeyCode) -> Array<MIEscapeCode> {
-                let encoding: String.Encoding = .utf8
-
-                var result: Array<MIEscapeCode> = []
-
-                let curvis = super.cursor.visible
-                if curvis {
-                        result.append(.makeCursorVisible(false))
-                }
-
-                switch code {
-                case .string(let str):
-                        let len = str.lengthOfBytes(using: encoding)
-                        result.append(.insertString(str))
-                        result.append(.moveCursorForward(len))
-                case .command(let key):
-                        let cmds = generateCommandFromCommandKeyInput(commandKey: key)
-                        result.append(contentsOf: cmds)
-                case .control(let key):
-                        let cmds = generateCommandFromControlKeyInput(controlKey: key)
-                        result.append(contentsOf: cmds)
-                case .funcCode(let num):
-                        let cmds = generateCommandFromFunctionKeyInput(functionNum: num)
-                        result.append(contentsOf: cmds)
-                case .deleteCode:
-                        result.append(.moveCursorBackward(1))
-                        result.append(.eraceFromCursorWithLength(1))
-                case .carriageReturnCode, .newlineCode:
-                        result.append(.insertString("\n"))
-                        result.append(.moveCursorForward(1))
-                case .leftArrowCode:
-                        result.append(.moveCursorBackward(1))
-                case .rightArrowCode:
-                        result.append(.moveCursorForward(1))
-                default:
-                        break
-                /*
-                 case backtabCode
-                 case beginCode
-                 case breakCode
-                 case clearDisplayCode
-                 case clearLineCode
-                 case deleteCharacterCode
-                 case deleteForwardCode
-                 case deleteLineCode
-                 case downArrowCode
-                 case endCode
-                 case enterCode
-                 case executeCode
-                 case findCode
-                 case formfeedCode
-                 case helpCode
-                 case homeCode
-                 case insertCode
-                 case insertCharacterCode
-                 case insertLineCode
-                 case leftArrowCode
-                 case lineSeparatorCode
-                 case menuCode
-                 case menuSwitchCode
-                 case newlineCode
-                 case nextCode
-                 case pageDownCode
-                 case pageUpCode
-                 case paragraphSeparatorCode
-                 case pauseCode
-                 case prevCode
-                 case printCode
-                 case printScreenCode
-                 case redoCode
-                 case resetCode
-                 case scrollLockCode
-                 case selectCode
-                 case stopCode
-                 case sysReqCode
-                 case systemCode
-                 case tabCode
-                 case undoCode
-                 case upArrowCode
-                 case userCode
-                 */
-                }
-                if curvis {
-                        result.append(.makeCursorVisible(true))
-                }
-                return result
-        }
-
-        private func generateCommandFromCommandKeyInput(commandKey key: String) -> Array<MIEscapeCode> {
-                return []
-        }
-
-        private func generateCommandFromControlKeyInput(controlKey key: Character) -> Array<MIEscapeCode> {
-                var result: Array<MIEscapeCode> = []
-                switch key {
-                case "b": result.append(.moveCursorBackward(1))
-                case "f": result.append(.moveCursorForward(1))
-                default:  break
-                }
-                return result
-        }
-
-        private func generateCommandFromFunctionKeyInput(functionNum num: Int) -> Array<MIEscapeCode> {
-                return []
+                mFileInterface.inputWriteHandle.write(string: exestr)
         }
 }
 
