@@ -119,6 +119,15 @@ public class MITerminalView: MITextView
                 /* key */
                 case .carriageReturnKey:
                         commands.append(.insertNewline)
+                case .arrowKey(let dir):
+                        switch dir {
+                        case .right:    commands.append(.moveCursorForward(1))
+                        case .left:     commands.append(.moveCursorBackward(1))
+                        case .up:       commands.append(.moveCursorUp(1))
+                        case .down:     commands.append(.moveCursorDown(1))
+                        @unknown default:
+                                NSLog("[Error] Can not happen at \(#file)")
+                        }
                 case .moveCursorForward(let num):
                         commands.append(.moveCursorForward(num))
                 case .moveCursorBackward(let num):
