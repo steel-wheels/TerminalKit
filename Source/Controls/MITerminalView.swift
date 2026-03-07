@@ -136,6 +136,8 @@ public class MITerminalView: MITextView
                         commands.append(.moveCursorToHome)
                 case .makeCursorVisible(let flag):
                         commands.append(.setCursorVisible(flag))
+                case .deleteKey, .backspaceKey:
+                        commands.append(.removeBackward(1))
                 case .blinkCursor(let flag):
                         commands.append(.blinkCursor(flag))
                 default:
@@ -143,8 +145,6 @@ public class MITerminalView: MITextView
                 /*
                  /* Key */
                  case backspaceKey
-                 case carriageReturnKey
-                 case deleteKey
                  case arrowKey(MIArrowKeyType)
                  //case enterKey                         -> merged with newline
                  case functionKey(Int)
@@ -162,10 +162,6 @@ public class MITerminalView: MITextView
 
                  /* Cursor Controls */
                  case moveCursorTo(Int, Int)                     // (line, column)
-                 case moveCursorUp(Int)                          // (lines)
-                 case moveCursorDown(Int)                        // (lines)
-                 case moveCursorForward(Int)                     // (columns)
-                 case moveCursorBackward(Int)                    // (columns)
                  case moveCursorToBeginingOfNextLine(Int)         // (lines)
                  case moveCursorToBeginingOfPrevLine(Int)         // (lines)
                  case moveCursorToColumn(Int)                    // (column)
