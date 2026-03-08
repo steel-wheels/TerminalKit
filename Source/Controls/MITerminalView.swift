@@ -84,6 +84,7 @@ public class MITerminalView: MITextView
                 if let accfunc = mAcceptKeyDownFunc {
                         if let modcodes = accfunc(ecodes) {
                                 put(escapeCodes: modcodes, withCursorControl: true)
+                                return true
                         }
                 } else {
                         put(escapeCodes: ecodes, withCursorControl: true)
@@ -132,6 +133,8 @@ public class MITerminalView: MITextView
                         commands.append(.moveCursorForward(num))
                 case .moveCursorBackward(let num):
                         commands.append(.moveCursorBackward(num))
+                case .tabKey:
+                        commands.append(.insertTab)
                 case .homeKey:
                         commands.append(.moveCursorToHome)
                 case .makeCursorVisible(let flag):
@@ -144,8 +147,6 @@ public class MITerminalView: MITextView
                         break
                 /*
                  /* Key */
-                 case backspaceKey
-                 case arrowKey(MIArrowKeyType)
                  //case enterKey                         -> merged with newline
                  case functionKey(Int)
                  case formFeedKey
