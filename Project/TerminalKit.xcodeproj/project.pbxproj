@@ -19,6 +19,8 @@
 		05B55A172F4B172C00CD40A9 /* TerminalKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05F9043C2F11C9D400953FE5 /* TerminalKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05D634E42F0FF6940058E2A3 /* MITerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D634E32F0FF6940058E2A3 /* MITerminalView.swift */; };
 		05D634E52F0FF6940058E2A3 /* MITerminalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D634E32F0FF6940058E2A3 /* MITerminalView.swift */; };
+		05DC6BA62F66AD5D00E134DA /* ShellKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05DC6BA52F66AD5D00E134DA /* ShellKit.xcframework */; };
+		05DC6BA72F66AD5D00E134DA /* ShellKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05DC6BA52F66AD5D00E134DA /* ShellKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,7 @@
 				05B55A172F4B172C00CD40A9 /* TerminalKit.xcframework in Embed Frameworks */,
 				05B55A152F4B172C00CD40A9 /* MultiUIKit.xcframework in Embed Frameworks */,
 				05B55A122F4B171100CD40A9 /* MultiDataKit.xcframework in Embed Frameworks */,
+				05DC6BA72F66AD5D00E134DA /* ShellKit.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -60,6 +63,7 @@
 		0537CB152F0EACCB00F192FC /* MultiUIKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiUIKit.xcframework; path = ../../../Library/Frameworks/MultiUIKit.xcframework; sourceTree = "<group>"; };
 		0592E4E12F0E9DB40043817A /* TerminalKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TerminalKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05D634E32F0FF6940058E2A3 /* MITerminalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MITerminalView.swift; path = ../Source/Controls/MITerminalView.swift; sourceTree = SOURCE_ROOT; };
+		05DC6BA52F66AD5D00E134DA /* ShellKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ShellKit.xcframework; path = ../../../Library/Frameworks/ShellKit.xcframework; sourceTree = "<group>"; };
 		05F904292F11C89B00953FE5 /* UnitTest_macOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UnitTest_macOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		05F9043C2F11C9D400953FE5 /* TerminalKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = TerminalKit.xcframework; path = ../../../Library/Frameworks/TerminalKit.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +112,7 @@
 				05B55A162F4B172C00CD40A9 /* TerminalKit.xcframework in Frameworks */,
 				05B55A142F4B172C00CD40A9 /* MultiUIKit.xcframework in Frameworks */,
 				05B55A112F4B171100CD40A9 /* MultiDataKit.xcframework in Frameworks */,
+				05DC6BA62F66AD5D00E134DA /* ShellKit.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +122,7 @@
 		0537CB102F0EACAE00F192FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				05DC6BA52F66AD5D00E134DA /* ShellKit.xcframework */,
 				05F9043C2F11C9D400953FE5 /* TerminalKit.xcframework */,
 				0537CB152F0EACCB00F192FC /* MultiUIKit.xcframework */,
 				0537CB112F0EACB000F192FC /* MultiDataKit.xcframework */,

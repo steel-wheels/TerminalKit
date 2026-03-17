@@ -15,15 +15,8 @@ import MultiDataKit
 
 public class MITerminalView: MITextView
 {
-        #if os(OSX)
-        public typealias AcceptKeyDownFunc = (_ : Array<MIEscapeCode>) -> Array<MIEscapeCode>?
-        #endif
-
-        private var mFileInterface                              = MIFileInterface()
-        private var mCursorTimer:       Timer?                  = nil
-        #if os(OSX)
-        private var mAcceptKeyDownFunc: AcceptKeyDownFunc?      = nil
-        #endif
+        private var mFileInterface:     MIFileInterface? = nil
+        private var mCursorTimer:       Timer? = nil
 
         deinit {
                 if let timer = mCursorTimer {
@@ -34,18 +27,6 @@ public class MITerminalView: MITextView
 
         open override func setup(frame frm: CGRect) {
                 super.setup(frame: frm)
-
-                mFileInterface.setInputReader(readFunctionn: {
-                        (_ str: String) -> Void in
-                        switch MIEscapeCode.decode(string: str) {
-                        case .success(let codes):
-                                Task {
-                                        await self.execute(escapeCodes: codes)
-                                }
-                        case .failure(let err):
-                                NSLog("[Error] \(MIError.toString(error: err)) at \(#file)")
-                        }
-                })
 
                 let commands: Array<MITextEditCommand> = [
                         .setFont(MIFont.terminalFont(size: 12.0)),
@@ -75,36 +56,47 @@ public class MITerminalView: MITextView
                 self.cursor.visible = true
         }
 
+        public var fileInterface: MIFileInterface? {
+                get      { return mFileInterface     }
+                set(src) {
+                        mFileInterface = src
+                        if let fileif = src {
+                                fileif.setReader(reader: { (_ str: String) in
+                                        switch MIEscapeCode.decode(string: str) {
+                                        case .success(let ecodes):
+                                                Task { await self.execute(escapeCodes: ecodes) }
+                                        case .failure(let err):
+                                                NSLog("[Error] \(MIError.errorToString(error: err)) at \(#file)")
+                                        }
+                                })
+                        }
+                }
+        }
+
+        /*
+        private func readInput(handler hdl: FileHandle) {
+                let data = hdl.availableData
+                if data.isEmpty {
+                        hdl.readabilityHandler = nil
+                } else {
+                        if let str = String(data: data, encoding: .utf8){
+
+                        } else {
+                                NSLog("[Error] Failed to read at \(#file)")
+                        }
+                }
+        }*/
+
         #if os(OSX)
         private func keydown(isKeyDown down: Bool, event evt: NSEvent) -> Bool {
                 guard down else {
                         return true
                 }
                 let ecodes = MIEscapeCode.decode(event: evt)
-                if let accfunc = mAcceptKeyDownFunc {
-                        if let modcodes = accfunc(ecodes) {
-                                put(escapeCodes: modcodes, withCursorControl: true)
-                                return true
-                        }
-                } else {
-                        put(escapeCodes: ecodes, withCursorControl: true)
-                }
+                put(escapeCodes: ecodes, withCursorControl: true)
                 return true
         }
         #endif
-
-
-        public var inputWriteHandle: FileHandle { get {
-                return mFileInterface.inputWriteHandle
-        }}
-
-        public func setOutputReader(readFunctionn readf: @escaping MIFileInterface.ReadFunction) {
-                mFileInterface.setOutputReader(readFunctionn: readf)
-        }
-
-        public func setErrorReader(readFunctionn readf: @escaping MIFileInterface.ReadFunction) {
-                mFileInterface.setErrorReader(readFunctionn: readf)
-        }
 
         private func execute(escapeCodes codes: Array<MIEscapeCode>) {
                 for code in codes {
@@ -211,7 +203,11 @@ public class MITerminalView: MITextView
                 if doctrl {
                         exestr += MIEscapeCode.makeCursorVisible(true).encode()
                 }
-                mFileInterface.inputWriteHandle.write(string: exestr)
+                if let fileif = mFileInterface {
+                        fileif.write(string: exestr)
+                } else {
+                        NSLog("[Error] No file interface at \(#file)")
+                }
         }
 }
 

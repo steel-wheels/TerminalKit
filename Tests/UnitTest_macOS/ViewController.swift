@@ -6,15 +6,21 @@
 //
 
 import TerminalKit
+import ShellKit
 import MultiUIKit
+import MultiDataKit
 import Cocoa
 
 class ViewController: NSViewController
 {
         @IBOutlet var mTerminalView: MITerminalView!
+        private   var mPipeInterfgace  = MIPipeInterface()
+        private   var mShell: KSShell? = nil
 
         override func viewDidLoad() {
                 super.viewDidLoad()
+
+                mTerminalView.fileInterface = MIFileInterface(asSlave: mPipeInterfgace)
 
                 // Do any additional setup after loading the view.
                 let textcol = MIColor.green
@@ -29,6 +35,9 @@ class ViewController: NSViewController
                         .insertText("Hello, World !!")
                 ]
                 mTerminalView.execute(commands: commands)
+
+                let shell = KSShell(fileInterface: MIFileInterface(asMaster: mPipeInterfgace))
+                mShell = shell
         }
 
         override var representedObject: Any? {
