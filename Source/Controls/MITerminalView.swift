@@ -47,8 +47,7 @@ public class MITerminalView: MITextView
                 #if os(OSX)
                 mCursorTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
                         DispatchQueue.main.async {
-                                let ecode: MIEscapeCode = .blinkCursor(!self.cursor.blink)
-                                self.put(escapeCodes: [ecode], withCursorControl: false)
+                                self.execute(commands: [.blinkCursor(!self.cursor.blink)])
                         }
                 }
                 #endif
@@ -73,27 +72,13 @@ public class MITerminalView: MITextView
                 }
         }
 
-        /*
-        private func readInput(handler hdl: FileHandle) {
-                let data = hdl.availableData
-                if data.isEmpty {
-                        hdl.readabilityHandler = nil
-                } else {
-                        if let str = String(data: data, encoding: .utf8){
-
-                        } else {
-                                NSLog("[Error] Failed to read at \(#file)")
-                        }
-                }
-        }*/
-
         #if os(OSX)
         private func keydown(isKeyDown down: Bool, event evt: NSEvent) -> Bool {
                 guard down else {
                         return true
                 }
                 let ecodes = MIEscapeCode.decode(event: evt)
-                put(escapeCodes: ecodes, withCursorControl: true)
+                respond(escapeCodes: ecodes)
                 return true
         }
         #endif
@@ -106,6 +91,11 @@ public class MITerminalView: MITextView
 
         private func execute(escapeCode code: MIEscapeCode) {
                 var commands: Array<MITextEditCommand> = []
+
+                if self.cursor.visible {
+                        commands.append(.blinkCursor(false))
+                }
+
                 switch code {
                 case .insertString(let str):
                         commands.append(.insertText(str))
@@ -188,20 +178,17 @@ public class MITerminalView: MITextView
                  case setColor(MITextColor)
                  */
                 }
+
+                if self.cursor.visible {
+                        commands.append(.blinkCursor(true))
+                }
                 super.execute(commands: commands)
         }
 
-        private func put(escapeCodes codes: Array<MIEscapeCode>, withCursorControl ctrl: Bool) {
-                let doctrl = ctrl && self.cursor.visible
+        private func respond(escapeCodes codes: Array<MIEscapeCode>) {
                 var exestr = ""
-                if doctrl {
-                        exestr += MIEscapeCode.makeCursorVisible(false).encode()
-                }
                 for execode in codes {
                         exestr += execode.encode()
-                }
-                if doctrl {
-                        exestr += MIEscapeCode.makeCursorVisible(true).encode()
                 }
                 if let fileif = mFileInterface {
                         fileif.write(string: exestr)

@@ -32,7 +32,7 @@ class ViewController: NSViewController
                 let commands: Array<MITextEditCommand> = [
                         .setTextColor(textcol),
                         .setBackgroundColor(backcol),
-                        .insertText("Hello, World !!")
+                        .insertText(" ")
                 ]
                 mTerminalView.execute(commands: commands)
 
