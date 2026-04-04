@@ -15,9 +15,25 @@ import MultiDataKit
 
 public class MITerminalView: MITextView
 {
-        private var mFileInterface:     MIFileInterface? = nil
+        private var mStandardInput:     FileHandle
+        private var mStandardOutput:    FileHandle
+        private var mStandardError:     FileHandle
         private var mCursorTimer:       Timer? = nil
 
+        public override init(frame: CGRect) {
+                mStandardInput  = FileHandle.standardInput
+                mStandardOutput = FileHandle.standardOutput
+                mStandardError  = FileHandle.standardError
+                super.init(frame: frame)
+        }
+        
+        @MainActor @preconcurrency required dynamic init?(coder: NSCoder) {
+                mStandardInput  = FileHandle.standardInput
+                mStandardOutput = FileHandle.standardOutput
+                mStandardError  = FileHandle.standardError
+                super.init(coder: coder)
+        }
+        
         deinit {
                 if let timer = mCursorTimer {
                         timer.invalidate()
@@ -55,21 +71,31 @@ public class MITerminalView: MITextView
                 self.cursor.visible = true
         }
 
-        public var fileInterface: MIFileInterface? {
-                get      { return mFileInterface     }
-                set(src) {
-                        mFileInterface = src
-                        if let fileif = src {
-                                fileif.setReader(reader: { (_ str: String) in
-                                        switch MIEscapeCode.decode(string: str) {
-                                        case .success(let ecodes):
-                                                Task { await self.execute(escapeCodes: ecodes) }
-                                        case .failure(let err):
-                                                NSLog("[Error] \(MIError.errorToString(error: err)) at \(#file)")
-                                        }
-                                })
-                        }
+        public var standardInput: FileHandle {
+                get {
+                        return mStandardInput
                 }
+                set(hdl){
+                        mStandardInput = hdl
+                        hdl.setReader(reader: { (_ str: String) in
+                                switch MIEscapeCode.decode(string: str) {
+                                case .success(let ecodes):
+                                        Task { await self.execute(escapeCodes: ecodes) }
+                                case .failure(let err):
+                                        NSLog("[Error] \(MIError.errorToString(error: err)) at \(#file)")
+                                }
+                        })
+                }
+        }
+
+        public var standardOutput: FileHandle {
+                get      { return mStandardOutput }
+                set(hdl) { mStandardOutput = hdl }
+        }
+
+        public var standardError: FileHandle {
+                get      { return mStandardError }
+                set(hdl) { mStandardError = hdl }
         }
 
         #if os(OSX)
@@ -190,11 +216,7 @@ public class MITerminalView: MITextView
                 for execode in codes {
                         exestr += execode.encode()
                 }
-                if let fileif = mFileInterface {
-                        fileif.write(string: exestr)
-                } else {
-                        NSLog("[Error] No file interface at \(#file)")
-                }
+                mStandardOutput.write(string: exestr)
         }
 }
 
