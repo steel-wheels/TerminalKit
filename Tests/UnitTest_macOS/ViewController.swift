@@ -56,12 +56,26 @@ class ViewController: NSViewController
                         (_ str: String) -> Void in NSLog("[stderr] \(str)")
                 })
                 // store initial message
-                let commands: Array<MITextEditCommand> = [
+                let commands0: Array<MITextEditCommand> = [
                         .setTextColor(textcol),
                         .setBackgroundColor(backcol),
                         .insertText(" ")
                 ]
-                mTerminalView.execute(commands: commands)
+                mTerminalView.execute(commands: commands0)
+
+                // test
+                let str0 = "Hello, world !!"
+                let str1 = "Good morning"
+                let commands1: Array<MITextEditCommand> = [
+                        .blinkCursor(false),
+                        .insertText(str0),
+                        .moveCursorForward(str0.lengthOfBytes(using: .utf8)),
+                        .insertNewline,
+                        //.insertText(str1),
+                        //.moveCursorForward(str1.lengthOfBytes(using: .utf8))
+                        .blinkCursor(true)
+                ]
+                mTerminalView.execute(commands: commands1)
         }
 
         override var representedObject: Any? {

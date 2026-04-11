@@ -123,36 +123,61 @@ public class MITerminalView: MITextView
                 }
 
                 switch code {
-                case .insertString(let str):
-                        commands.append(.insertText(str))
+                case .string(let str):
+                        var line: String = ""
+                        var idx    = str.startIndex
+                        let endidx = str.endIndex
+                        while idx < endidx {
+                                let c = str[idx]
+                                if c == .newline {
+                                        if !line.isEmpty {
+                                                commands.append(.insertText(line))
+                                                commands.append(.moveCursorForward(line.lengthOfBytes(using: .utf8)))
+                                                line = ""
+                                        }
+                                        commands.append(.insertNewline)
+                                } else {
+                                        line += String(c)
+                                }
+                                idx = str.index(after: idx)
+                        }
+                        if !line.isEmpty {
+                                commands.append(.insertText(line))
+                                commands.append(.moveCursorForward(line.lengthOfBytes(using: .utf8)))
+                        }
                 /* key */
-                case .carriageReturnKey:
-                        commands.append(.insertNewline)
-                case .arrowKey(let dir):
-                        switch dir {
-                        case .right:    commands.append(.moveCursorForward(1))
-                        case .left:     commands.append(.moveCursorBackward(1))
-                        case .up:       commands.append(.moveCursorUp(1))
-                        case .down:     commands.append(.moveCursorDown(1))
-                        @unknown default:
-                                NSLog("[Error] Can not happen at \(#file)")
+                case .key(let key):
+                        switch key {
+                        case .lineFeed:
+                                commands.append(.insertNewline)
+                        case .arrow(let atype):
+                                switch atype {
+                                case .right:    commands.append(.moveCursorForward(1))
+                                case .left:     commands.append(.moveCursorBackward(1))
+                                case .up:       commands.append(.moveCursorUp(1))
+                                case .down:     commands.append(.moveCursorDown(1))
+                                @unknown default:
+                                        NSLog("[Error] Can not happen at \(#file)")
+                                }
+                        case .tab:
+                                commands.append(.insertTab)
+                        case .home:
+                                commands.append(.moveCursorToHome)
+                        case .delete, .backspace:
+                                commands.append(.removeBackward(1))
+                        default:
+                                NSLog("Unsupported key: \(key.description) at \(#file))")
                         }
                 case .moveCursorForward(let num):
                         commands.append(.moveCursorForward(num))
                 case .moveCursorBackward(let num):
                         commands.append(.moveCursorBackward(num))
-                case .tabKey:
-                        commands.append(.insertTab)
-                case .homeKey:
-                        commands.append(.moveCursorToHome)
                 case .makeCursorVisible(let flag):
                         commands.append(.setCursorVisible(flag))
-                case .deleteKey, .backspaceKey:
-                        commands.append(.removeBackward(1))
                 case .blinkCursor(let flag):
                         commands.append(.blinkCursor(flag))
                 default:
-                        break
+                        NSLog("Unsupported sequence: \(code.description()) at \(#file))")
                 /*
                  /* Key */
                  //case enterKey                         -> merged with newline
