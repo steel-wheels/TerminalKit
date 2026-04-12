@@ -168,12 +168,22 @@ public class MITerminalView: MITextView
                         default:
                                 NSLog("Unsupported key: \(key.description) at \(#file))")
                         }
+                /* cursor operation */
                 case .moveCursorForward(let num):
                         commands.append(.moveCursorForward(num))
                 case .moveCursorBackward(let num):
                         commands.append(.moveCursorBackward(num))
                 case .makeCursorVisible(let flag):
                         commands.append(.setCursorVisible(flag))
+                /* color operation */
+                case .setColor(let txtcol):
+                        let (isfg, color) = txtcol.toNativeColor()
+                        if isfg {
+                                commands.append(.setTextColor(color))
+                        } else {
+                                commands.append(.setBackgroundColor(color))
+                        }
+                /* blink cursor s*/
                 case .blinkCursor(let flag):
                         commands.append(.blinkCursor(flag))
                 default:
@@ -226,7 +236,7 @@ public class MITerminalView: MITextView
                  case resetAllCharacterAttributes
 
                  /* Character Color */
-                 case setColor(MITextColor)
+
                  */
                 }
 

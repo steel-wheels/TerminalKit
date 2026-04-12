@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		051B1A6F2F8BA02600570BF1 /* MITextColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051B1A6E2F8BA02600570BF1 /* MITextColor.swift */; };
+		051B1A702F8BA02600570BF1 /* MITextColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051B1A6E2F8BA02600570BF1 /* MITextColor.swift */; };
 		052DA15C2F0EAE0800AE2125 /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0537CB112F0EACB000F192FC /* MultiDataKit.xcframework */; };
 		052DA15F2F0EAE1D00AE2125 /* MultiUIKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0537CB152F0EACCB00F192FC /* MultiUIKit.xcframework */; };
 		0537CB122F0EACB000F192FC /* MultiDataKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0537CB112F0EACB000F192FC /* MultiDataKit.xcframework */; };
@@ -59,6 +61,7 @@
 
 /* Begin PBXFileReference section */
 		050AA74E2F0E9F0300FD2057 /* TerminalKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TerminalKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		051B1A6E2F8BA02600570BF1 /* MITextColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MITextColor.swift; sourceTree = "<group>"; };
 		0537CB112F0EACB000F192FC /* MultiDataKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiDataKit.xcframework; path = ../../../Library/Frameworks/MultiDataKit.xcframework; sourceTree = "<group>"; };
 		0537CB152F0EACCB00F192FC /* MultiUIKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = MultiUIKit.xcframework; path = ../../../Library/Frameworks/MultiUIKit.xcframework; sourceTree = "<group>"; };
 		0592E4E12F0E9DB40043817A /* TerminalKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TerminalKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,6 +122,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		051B1A6D2F8BA00200570BF1 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				051B1A6E2F8BA02600570BF1 /* MITextColor.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		0537CB102F0EACAE00F192FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +144,7 @@
 		053ED0EC2F0EA12F001BC673 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				051B1A6D2F8BA00200570BF1 /* Data */,
 				05D634E22F0FF63F0058E2A3 /* Controls */,
 			);
 			name = Source;
@@ -364,6 +376,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05D634E42F0FF6940058E2A3 /* MITerminalView.swift in Sources */,
+				051B1A702F8BA02600570BF1 /* MITextColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,6 +385,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				05D634E52F0FF6940058E2A3 /* MITerminalView.swift in Sources */,
+				051B1A6F2F8BA02600570BF1 /* MITextColor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

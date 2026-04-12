@@ -71,8 +71,8 @@ class ViewController: NSViewController
                         .insertText(str0),
                         .moveCursorForward(str0.lengthOfBytes(using: .utf8)),
                         .insertNewline,
-                        //.insertText(str1),
-                        //.moveCursorForward(str1.lengthOfBytes(using: .utf8))
+                        .insertText(str1),
+                        .moveCursorForward(str1.lengthOfBytes(using: .utf8)),
                         .blinkCursor(true)
                 ]
                 mTerminalView.execute(commands: commands1)
