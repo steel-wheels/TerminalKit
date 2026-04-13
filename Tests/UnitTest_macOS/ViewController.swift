@@ -59,7 +59,6 @@ class ViewController: NSViewController
                 let commands0: Array<MITextEditCommand> = [
                         .setTextColor(textcol),
                         .setBackgroundColor(backcol),
-                        .insertText(" ")
                 ]
                 mTerminalView.execute(commands: commands0)
 

@@ -47,7 +47,8 @@ public class MITerminalView: MITextView
                 let commands: Array<MITextEditCommand> = [
                         .setFont(MIFont.terminalFont(size: 12.0)),
                         .setTextColor(.green),
-                        .setBackgroundColor(.black)
+                        .setBackgroundColor(.black),
+                        .insertText(" ")                // space for cursor
                 ]
                 self.execute(commands: commands)
 
