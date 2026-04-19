@@ -149,7 +149,7 @@ public class MITerminalView: MITextView
                 /* key */
                 case .key(let key):
                         switch key {
-                        case .lineFeed:
+                        case .lineFeed, .enter, .carriageReturn:
                                 commands.append(.insertNewline)
                         case .arrow(let atype):
                                 switch atype {
