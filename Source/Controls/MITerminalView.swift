@@ -125,27 +125,8 @@ public class MITerminalView: MITextView
 
                 switch code {
                 case .string(let str):
-                        var line: String = ""
-                        var idx    = str.startIndex
-                        let endidx = str.endIndex
-                        while idx < endidx {
-                                let c = str[idx]
-                                if c == .newline {
-                                        if !line.isEmpty {
-                                                commands.append(.insertText(line))
-                                                commands.append(.moveCursorForward(line.lengthOfBytes(using: .utf8)))
-                                                line = ""
-                                        }
-                                        commands.append(.insertNewline)
-                                } else {
-                                        line += String(c)
-                                }
-                                idx = str.index(after: idx)
-                        }
-                        if !line.isEmpty {
-                                commands.append(.insertText(line))
-                                commands.append(.moveCursorForward(line.lengthOfBytes(using: .utf8)))
-                        }
+                        let strcmds = encode(string: str)
+                        commands.append(contentsOf: strcmds)
                 /* key */
                 case .key(let key):
                         switch key {
@@ -191,19 +172,6 @@ public class MITerminalView: MITextView
                         NSLog("Unsupported sequence: \(code.description()) at \(#file))")
                 /*
                  /* Key */
-                 //case enterKey                         -> merged with newline
-                 case functionKey(Int)
-                 case formFeedKey
-                 case helpKey
-                 case homeKey
-                 case insertKey
-                 case menuKey
-                 case newlineKey
-                 case pageUpKey
-                 case pageDownKey
-                 case tabKey
-                 case commandKey(Character)
-                 case controlKey(Character)
 
                  /* Cursor Controls */
                  case moveCursorTo(Int, Int)                     // (line, column)
@@ -245,6 +213,38 @@ public class MITerminalView: MITextView
                         commands.append(.blinkCursor(true))
                 }
                 super.execute(commands: commands)
+        }
+
+        private func encode(string str: String) -> Array<MITextEditCommand> {
+                var result: Array<MITextEditCommand> = []
+                var idx    = str.startIndex
+                let endidx = str.endIndex
+
+                var line: String = ""
+                while idx < endidx {
+                        let c = str[idx]
+                        if c.isNewline {
+                                if !line.isEmpty{
+                                        let len = line.count
+                                        result.append(.insertText(line))
+                                        result.append(.moveCursorForward(len))
+                                        line = ""
+                                }
+                                result.append(.insertNewline)
+                        } else {
+                                line += String(c)
+                        }
+                        idx = str.index(after: idx)
+                }
+                if !line.isEmpty {
+                        let len = line.count
+                        result.append(.insertText(line))
+                        result.append(.moveCursorForward(len))
+                }
+                /*for cmd in result {
+                        NSLog("\(#file) command: \(cmd.description)")
+                }*/
+                return result
         }
 
         private func respond(escapeCodes codes: Array<MIEscapeCode>) {
