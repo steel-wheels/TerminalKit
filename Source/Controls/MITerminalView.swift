@@ -150,6 +150,9 @@ public class MITerminalView: MITextView
                         default:
                                 NSLog("Unsupported key: \(key.description) at \(#file))")
                         }
+                /* delete operation */
+                case .eraceFromCursorWithLength(let num):
+                        commands.append(.removeForward(num))
                 /* cursor operation */
                 case .moveCursorForward(let num):
                         commands.append(.moveCursorForward(num))
@@ -220,6 +223,7 @@ public class MITerminalView: MITextView
                 var idx    = str.startIndex
                 let endidx = str.endIndex
 
+                //NSLog("\(#file) execute source: \"\(str)\"")
                 var line: String = ""
                 while idx < endidx {
                         let c = str[idx]
@@ -241,9 +245,9 @@ public class MITerminalView: MITextView
                         result.append(.insertText(line))
                         result.append(.moveCursorForward(len))
                 }
-                /*for cmd in result {
-                        NSLog("\(#file) command: \(cmd.description)")
-                }*/
+                //for cmd in result {
+                //        NSLog("\(#file) execute: \(cmd.description)")
+                //}
                 return result
         }
 
