@@ -52,8 +52,6 @@ public class MITerminalView: MITextView
                 ]
                 self.execute(commands: commands)
 
-                self.insertionPointColor = MIColor.green
-
                 #if os(OSX)
                 super.set(keyEventReceiver: {
                         (_ down: Bool, _ event: NSEvent) -> Bool in
