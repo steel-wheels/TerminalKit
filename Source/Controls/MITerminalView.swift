@@ -171,6 +171,10 @@ public class MITerminalView: MITextView
                         result.append(.moveCursorForward(num))
                 case .moveCursorBackward(let num):
                         result.append(.moveCursorBackward(num))
+                case .moveCursorTo(let row, let col):
+                        result.append(.moveCursorToPoint(row, col))
+                case .requestCursorPosition:
+                        result.append(.requireCursorPosition)
                 case .makeCursorVisible(let flag):
                         result.append(.setCursorVisible(flag))
                 /* color operation */
@@ -194,7 +198,6 @@ public class MITerminalView: MITextView
                  case moveCursorToBeginingOfNextLine(Int)         // (lines)
                  case moveCursorToBeginingOfPrevLine(Int)         // (lines)
                  case moveCursorToColumn(Int)                    // (column)
-                 case requestCursorPosition
                  case moveCursor1LineUp
                  case saveCursorPosition(Int)                    // 0:DEC, 1:SCO
                  case restoreCursorPosition(Int)                 // 0:DEC, 1:SCO
@@ -262,6 +265,8 @@ public class MITerminalView: MITextView
 
         private func respond(responce resp: MITextEditResponce) {
                 switch resp {
+                case .returnCursorPosition(let row, let col):
+                        NSLog("respond: cursor_position(\(row), \(col))")
                 case .returnConsoleSize(let colnum, let rownum):
                         NSLog("respond: size(\(colnum), \(rownum))")
                 @unknown default:

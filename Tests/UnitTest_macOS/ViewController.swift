@@ -6,7 +6,6 @@
 //
 
 import TerminalKit
-import ShellKit
 import MultiUIKit
 import MultiDataKit
 import Cocoa
@@ -72,6 +71,7 @@ class ViewController: NSViewController
                         .insertNewline,
                         .insertText(str1),
                         .moveCursorForward(str1.lengthOfBytes(using: .utf8)),
+                        .requireCursorPosition,
                         .blinkCursor(true)
                 ]
                 mTerminalView.execute(commands: commands1)
