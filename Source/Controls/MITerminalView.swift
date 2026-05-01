@@ -52,6 +52,11 @@ public class MITerminalView: MITextView
                 ]
                 self.execute(commands: commands)
 
+                super.set(commandRespoceReceivier: {
+                        (resp : MITextEditResponce) -> Void in
+                        self.respond(responce: resp)
+                })
+
                 #if os(OSX)
                 super.set(keyEventReceiver: {
                         (_ down: Bool, _ event: NSEvent) -> Bool in
@@ -109,66 +114,76 @@ public class MITerminalView: MITextView
         #endif
 
         private func execute(escapeCodes codes: Array<MIEscapeCode>) {
-                for code in codes {
-                        execute(escapeCode: code)
-                }
+                let cmds = transpile(escapeCodes: codes)
+                super.execute(commands: cmds)
         }
 
-        private func execute(escapeCode code: MIEscapeCode) {
-                var commands: Array<MITextEditCommand> = []
+        private func transpile(escapeCodes codes: Array<MIEscapeCode>) -> Array<MITextEditCommand> {
+                var result: Array<MITextEditCommand> = []
 
                 if self.cursor.visible {
-                        commands.append(.blinkCursor(false))
+                        result.append(.blinkCursor(false))
                 }
+                for code in codes {
+                        let cmds = transpile(escapeCode: code)
+                        result.append(contentsOf: cmds)
+                }
+                if self.cursor.visible {
+                        result.append(.blinkCursor(true))
+                }
+                return result
+        }
 
+        private func transpile(escapeCode code: MIEscapeCode) -> Array<MITextEditCommand> {
+                var result: Array<MITextEditCommand> = []
                 switch code {
                 case .string(let str):
                         let strcmds = encode(string: str)
-                        commands.append(contentsOf: strcmds)
+                        result.append(contentsOf: strcmds)
                 /* key */
                 case .key(let key):
                         switch key {
                         case .lineFeed, .enter, .carriageReturn:
-                                commands.append(.insertNewline)
+                                result.append(.insertNewline)
                         case .arrow(let atype):
                                 switch atype {
-                                case .right:    commands.append(.moveCursorForward(1))
-                                case .left:     commands.append(.moveCursorBackward(1))
-                                case .up:       commands.append(.moveCursorUp(1))
-                                case .down:     commands.append(.moveCursorDown(1))
+                                case .right:    result.append(.moveCursorForward(1))
+                                case .left:     result.append(.moveCursorBackward(1))
+                                case .up:       result.append(.moveCursorUp(1))
+                                case .down:     result.append(.moveCursorDown(1))
                                 @unknown default:
                                         NSLog("[Error] Can not happen at \(#file)")
                                 }
                         case .tab:
-                                commands.append(.insertTab)
+                                result.append(.insertTab)
                         case .home:
-                                commands.append(.moveCursorToHome)
+                                result.append(.moveCursorToHome)
                         case .delete, .backspace:
-                                commands.append(.removeBackward(1))
+                                result.append(.removeBackward(1))
                         default:
                                 NSLog("Unsupported key: \(key.description) at \(#file))")
                         }
                 /* delete operation */
                 case .eraceFromCursorWithLength(let num):
-                        commands.append(.removeForward(num))
+                        result.append(.removeForward(num))
                 /* cursor operation */
                 case .moveCursorForward(let num):
-                        commands.append(.moveCursorForward(num))
+                        result.append(.moveCursorForward(num))
                 case .moveCursorBackward(let num):
-                        commands.append(.moveCursorBackward(num))
+                        result.append(.moveCursorBackward(num))
                 case .makeCursorVisible(let flag):
-                        commands.append(.setCursorVisible(flag))
+                        result.append(.setCursorVisible(flag))
                 /* color operation */
                 case .setColor(let txtcol):
                         let (isfg, color) = txtcol.toNativeColor()
                         if isfg {
-                                commands.append(.setTextColor(color))
+                                result.append(.setTextColor(color))
                         } else {
-                                commands.append(.setBackgroundColor(color))
+                                result.append(.setBackgroundColor(color))
                         }
                 /* blink cursor s*/
                 case .blinkCursor(let flag):
-                        commands.append(.blinkCursor(flag))
+                        result.append(.blinkCursor(flag))
                 default:
                         NSLog("Unsupported sequence: \(code.description()) at \(#file))")
                 /*
@@ -209,11 +224,7 @@ public class MITerminalView: MITextView
 
                  */
                 }
-
-                if self.cursor.visible {
-                        commands.append(.blinkCursor(true))
-                }
-                super.execute(commands: commands)
+                return result
         }
 
         private func encode(string str: String) -> Array<MITextEditCommand> {
@@ -247,6 +258,15 @@ public class MITerminalView: MITextView
                 //        NSLog("\(#file) execute: \(cmd.description)")
                 //}
                 return result
+        }
+
+        private func respond(responce resp: MITextEditResponce) {
+                switch resp {
+                case .returnConsoleSize(let colnum, let rownum):
+                        NSLog("respond: size(\(colnum), \(rownum))")
+                @unknown default:
+                        NSLog("[Error] Can not happen at \(#file)")
+                }
         }
 
         private func respond(escapeCodes codes: Array<MIEscapeCode>) {
