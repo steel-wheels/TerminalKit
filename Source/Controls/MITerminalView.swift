@@ -44,6 +44,9 @@ public class MITerminalView: MITextView
         open override func setup(frame frm: CGRect) {
                 super.setup(frame: frm)
 
+                self.cursor.visible = true
+                self.isEditable = false
+
                 let commands: Array<MITextEditCommand> = [
                         .setFont(MIFont.terminalFont(size: 12.0)),
                         .setTextColor(.green),
@@ -71,8 +74,6 @@ public class MITerminalView: MITextView
                         }
                 }
                 #endif
-
-                self.cursor.visible = true
         }
 
         public var standardInput: FileHandle {
