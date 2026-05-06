@@ -268,6 +268,7 @@ public class MITerminalView: MITextView
                 switch resp {
                 case .returnCursorPosition(let row, let col):
                         NSLog("respond: cursor_position(\(row), \(col))")
+                        respond(escapeCodes: [.returnCursorPosition(row, col)])
                 case .returnConsoleSize(let colnum, let rownum):
                         NSLog("respond: size(\(colnum), \(rownum))")
                 @unknown default:
