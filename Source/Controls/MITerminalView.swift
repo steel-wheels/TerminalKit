@@ -16,7 +16,7 @@ import MultiDataKit
 public class MITerminalView: MITextView
 {
         private var mStandardInput:     FileHandle
-        private var mStandardOutput:    FileHandle
+        private var mStandardOutput:    FileHandle      // connected with pseudo terminal
         private var mStandardError:     FileHandle
         private var mCursorTimer:       Timer? = nil
 
@@ -236,6 +236,7 @@ public class MITerminalView: MITextView
                 }
                 if doupdateterm {
                         result.append(.invalidateIntrinsicContentSize)
+                        result.append(.scrollToLast)
                 }
                 return result
         }
@@ -280,6 +281,11 @@ public class MITerminalView: MITextView
                         respond(escapeCodes: [.returnCursorPosition(row, col)])
                 case .returnConsoleSize(let colnum, let rownum):
                         NSLog("respond: size(\(colnum), \(rownum))")
+                        let rows = UInt16(rownum)
+                        let cols = UInt16(colnum)
+                        if let ecode = MIPseudoTerminal.setTerminalSize(file: mStandardOutput, rows: rows, cols: cols) {
+                                NSLog("[Error] \(ecode.description) at \(#file)")
+                        }
                 @unknown default:
                         NSLog("[Error] Can not happen at \(#file)")
                 }
