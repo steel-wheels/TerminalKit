@@ -121,7 +121,7 @@ public class MITerminalView: MITextView
 
         private func transpile(escapeCodes codes: Array<MIEscapeCode>) -> Array<MITextEditCommand> {
                 var result: Array<MITextEditCommand> = []
-
+                //dump(escapeCodes: codes)
                 if self.cursor.visible {
                         result.append(.blinkCursor(false))
                 }
@@ -132,6 +132,7 @@ public class MITerminalView: MITextView
                 if self.cursor.visible {
                         result.append(.blinkCursor(true))
                 }
+                //dump(commands: result)
                 return result
         }
 
@@ -246,10 +247,9 @@ public class MITerminalView: MITextView
                 var idx    = str.startIndex
                 let endidx = str.endIndex
 
-                //NSLog("\(#file) execute source: \"\(str)\"")
                 var line: String = ""
                 while idx < endidx {
-                        let c = str[idx]
+                        let c: Character = str[idx]
                         if c.isNewline {
                                 if !line.isEmpty{
                                         let len = line.count
@@ -297,6 +297,22 @@ public class MITerminalView: MITextView
                         exestr += execode.encode()
                 }
                 mStandardOutput.write(string: exestr)
+        }
+
+        private func dump(escapeCodes ecodes: Array<MIEscapeCode>) {
+                NSLog("dump ecode: begin")
+                for ecode in ecodes {
+                        NSLog(" !" + ecode.encode() + "!")
+                }
+                NSLog("dump ecode: end")
+        }
+
+        private func dump(commands cmds: Array<MITextEditCommand>){
+                NSLog("command begin")
+                for cmd in cmds {
+                        NSLog(" " + cmd.description)
+                }
+                NSLog("command end")
         }
 }
 
