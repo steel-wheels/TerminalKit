@@ -138,18 +138,15 @@ public class MITerminalView: MITextView
 
         private func transpile(escapeCode code: MIEscapeCode) -> Array<MITextEditCommand> {
                 var result: Array<MITextEditCommand> = []
-                var doupdateterm = false
                 switch code {
                 case .string(let str):
                         let strcmds = encode(string: str)
                         result.append(contentsOf: strcmds)
-                        doupdateterm = true
                 /* key */
                 case .key(let key):
                         switch key {
                         case .lineFeed, .enter, .carriageReturn:
                                 result.append(.insertNewline)
-                                doupdateterm = true
                         case .arrow(let atype):
                                 switch atype {
                                 case .right:    result.append(.moveCursorForward(1))
@@ -161,19 +158,16 @@ public class MITerminalView: MITextView
                                 }
                         case .tab:
                                 result.append(.insertTab)
-                                doupdateterm = true
                         case .home:
                                 result.append(.moveCursorToHome)
                         case .delete, .backspace:
                                 result.append(.removeBackward(1))
-                                doupdateterm = true
                         default:
                                 NSLog("Unsupported key: \(key.description) at \(#file))")
                         }
                 /* delete operation */
                 case .eraceFromCursorWithLength(let num):
                         result.append(.removeForward(num))
-                        doupdateterm = true
                 /* cursor operation */
                 case .moveCursorForward(let num):
                         result.append(.moveCursorForward(num))
@@ -235,7 +229,7 @@ public class MITerminalView: MITextView
 
                  */
                 }
-                if doupdateterm {
+                if self.doScrollToLast() {
                         result.append(.invalidateIntrinsicContentSize)
                         result.append(.scrollToLast)
                 }
