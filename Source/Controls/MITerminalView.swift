@@ -180,13 +180,12 @@ public class MITerminalView: MITextView
                 case .makeCursorVisible(let flag):
                         result.append(.setCursorVisible(flag))
                 /* color operation */
-                case .setColor(let txtcol):
-                        let (isfg, color) = txtcol.toNativeColor()
-                        if isfg {
-                                result.append(.setTextColor(color))
-                        } else {
-                                result.append(.setBackgroundColor(color))
-                        }
+                case .setForegroundColor(let txtcol):
+                        let ncol = txtcol.toNativeColor()
+                        result.append(.setTextColor(ncol))
+                case .setBackgroundColor(let txtcol):
+                        let ncol = txtcol.toNativeColor()
+                        result.append(.setBackgroundColor(ncol))
                 /* blink cursor s*/
                 case .blinkCursor(let flag):
                         result.append(.blinkCursor(flag))

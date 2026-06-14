@@ -15,22 +15,21 @@ import UIKit
 
 public extension MITextColor
 {
-        func toNativeColor() -> (Bool, MIColor) {
-                let isfg:       Bool
+        func toNativeColor() -> MIColor {
                 let color:      MIColor
                 switch self {
-                case .black(let fg):    isfg = fg ; color = MIColor.black
-                case .red(let fg):      isfg = fg ; color = MIColor.red
-                case .green(let fg):    isfg = fg ; color = MIColor.green
-                case .yellow(let fg):   isfg = fg ; color = MIColor.yellow
-                case .blue(let fg):     isfg = fg ; color = MIColor.blue
-                case .magenta(let fg):  isfg = fg ; color = MIColor.magenta
-                case .cyan(let fg):     isfg = fg ; color = MIColor.cyan
-                case .white(let fg):    isfg = fg ; color = MIColor.white
+                case .black:            color = MIColor.black
+                case .red:              color = MIColor.red
+                case .green:            color = MIColor.green
+                case .yellow:           color = MIColor.yellow
+                case .blue:             color = MIColor.blue
+                case .magenta:          color = MIColor.magenta
+                case .cyan:             color = MIColor.cyan
+                case .white:            color = MIColor.white
                 @unknown default:
                         NSLog("[Error] Unknown color at \(#file)")
-                        isfg = true ; color = MIColor.black
+                        color = MIColor.black
                 }
-                return (isfg, color)
+                return color
         }
 }
